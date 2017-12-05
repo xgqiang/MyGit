@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: view.SeminarControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.011 s <<< FAILURE! - in view.SeminarControllerTest
+initializationError(view.SeminarControllerTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.IllegalStateException: Unable to find a @SpringBootConfiguration, you need to use @ContextConfiguration or @SpringBootTest(classes=...) with your test
+
