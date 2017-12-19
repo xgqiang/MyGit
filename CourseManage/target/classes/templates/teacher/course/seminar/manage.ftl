@@ -1,171 +1,11 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>新建课程</title>
-  
-<style>
-        html
-        {
-         height:100%;
-         margin:0;
-        }
-        body
-        {
-            height:100%;
-            margin:0; 
-        }
-      .top{
-        width: 100%;
-        height: 16%;
-        background-color: rgba(65,199,219,0.7);
-        text-align: center;
-        margin: 0 auto;
-      }
-
-      /**
-      *这个是指下面的导航和显示信息的块的样式，从整体上来讲，下面是一个大块
-      */
-
-      .body{
-        width: 100%;
-        height: 84%;
-        background-color: white;
-      }
-      .navigation{
-        width: 20%;
-        height: 100%;
-        background-color: rgba(204,204,204,0.6);
-        float: left;
-      }
-      .content{
-        width: 80%;
-        height: 100%;
-        background-color: white;
-        float: right;
-      }
-      .clear{
-        clear: both;
-      }
-      .font{
-        width: 20%;
-        font-family: YouYuan;
-        font-size: 40px;
-        font-weight: bold;
-        margin-left: 35%;
-        text-align: center;
-        padding: 2%;
-        float: left;
-        color: #FFFFFF;
-      }
-      .courseName{
-        width: 20%;
-        font-family: consolas;
-        font-size: 20px;
-        color: #0BACE1;
-        margin-left: 5%;
-        margin-top: 5%;
-      }
-      .courseIntroduction{
-        width: 90%;
-        height: 80%;
-        margin-top: 4%;
-        margin-left: auto;
-        margin-right: auto;
-        font-family: YouYuan;
-        font-size: 18px;
-      }
-      .title{
-        width: 20%;
-        font-family: YouYuan;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 1px;
-        margin-left: 2%;
-        margin-top: 1.2%;
-        color: #0BACE1;
-      }
-      .classInfo{
-        width: 100%;
-        height: 35%;
-        margin: 0 auto;
-      }
-      .seminarInfo{
-        width: 100%;
-        height: 65%;
-        margin: 0 auto;
-      }
-      .blockBody{
-        width: 96%;
-        height: 80%;
-        margin-top: 2%;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .block{
-        width:24%;
-        height: 120px;
-        background-color: rgba(11, 172, 225, 0.2);
-        border-radius: 24px;
-        text-align: center;
-        margin-right: 2%;
-        margin-bottom: 1%;
-        float: left;
-      }
-      .blockFont{
-        font-family: YouYuan;
-        font-size: 20px;
-        font-weight: bold;
-        padding-top: 20%;
-        color: #000000;
-      }
-      
-      .line{
-        width: 96%;
-        margin: 0 auto;
-        border: 1.5px solid #41C7DB;
-      }
-      .icon{
-        width:20%;
-        font-family: YouYuan;
-        font-size: 20px;
-        text-align: center;
-        color: white;
-        padding-top: 4%;
-        float: right;
-      }
-      .returnButton{
-        width: 10%;
-        background-color: #D4EEF2;
-        border: 1px solid #D4EEF2;
-        border-radius: 8px;
-        text-align: center;
-        margin-top: -2%;
-        margin-bottom: 1%;
-        margin-left: 85%;
-        z-index: 100;
-      }
-      .item{
-        width: 80%;
-        height: 15%;
-        padding-bottom: 1%;
-        margin: 0 auto;
-      }
-      .itemName{
-        font-family: YouYuan;
-        font-size: 18px;
-      }
-      .submit{
-        width: 15%;
-        height: 80%;
-        margin-left: 10%;
-        border-radius: 10px;
-        float: left;
-        background-color: #D4EEF2;
-        border: 1px solid #D4EEF2;
-        border-radius: 8px;
-        text-align: center;
-      }
-    </style> 
+	<meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>学生查看讨论课（随机）</title>
+    <link href="../../css/teacher/content.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript">
 function roll_back()
 {
@@ -179,9 +19,9 @@ window.history.back(-1);
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="/images/home.png">首页
-        		<img src="/images/help.png">帮助
-        		<img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+        		<img src="Img/home.png">首页
+                <img src="Img/help.png">帮助
+                <img src="Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>

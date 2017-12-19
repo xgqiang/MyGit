@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>教师查看学生报告</title>
-    <link rel="stylesheet" href="/bootstrap.min.css">
+    <link rel="stylesheet" href="{$base}/raffle/bootstrap.min.css">
     <style>
         html
         {

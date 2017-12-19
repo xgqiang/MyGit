@@ -2,7 +2,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>教师主页</title>
-    <link href="/新主页css.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/teacher/TeacherCourseHomePage.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 function roll_back()
@@ -54,9 +54,9 @@ $("#update_button").click(function(){
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="/images/home.png">首页
-        		<img src="/images/help.png">帮助
-        		<img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+        		<img src="Img/home.png">首页
+                <img src="Img/help.png">帮助
+                <img src="Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -64,29 +64,29 @@ $("#update_button").click(function(){
             <div class="navigation">
                 <div class="courseName">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="/me?type=teacher" style="text-decoration:none">基本信息</a><br>
-                  <a class="guidefont" href="/course?type=teacher" style="text-decoration:none">课程信息</a><br>
-                  <a class="guidefont" href="/course/create" style="text-decoration:none" onclick="return createcourseForm()">新建课程</a><br>
+                <div class="courseIntroduction"><a class="guidefont" href="/me?type=teacher" style="text-decoration:none">基本信息</a>
+                  <a class="guidefont" href="/course?type=teacher" style="text-decoration:none">课程信息</a>
+                  <a class="guidefont" href="/course/create" style="text-decoration:none" onclick="return createcourseForm()">新建课程</a>
                 </div>
             </div>
             <div class="content">
               <h2 class="newcourse">课程信息</h2>
-              <hr class="line"/>
-                
-              
+              <hr class="line"/>           
           <#list CourseList as Course>   
           <div class="main_box_right_content">
 				<h3 class="classtitle"><a href="/class?type=teacher"  data-id=${Course.id} style="text-decoration:none">${Course.name}</a>
 					<button data-course-id=${Course.id} id="delete_button">删除课程</button>
 					<button data-course-id=${Course.id} id="update_button" >修改课程</button>
-				</h3>
-				<hr/>
+				<div class="divideline"></div>
 				<div  class="classinfo">
-					<span>班级数：${Course.numClass}</span><br/>
-					<span>学生人数：${Course.numStudent}</span><br/>
-					<span>开始时间：${Course.startTime}</span><br/>
-					<span>结束时间：${Course.endTime}</span><br/>
-					<span>courseId：${Course.id}</span><br/>
+				    <table class="table">
+                    <tr>
+                       <td class="tabletext">班级数：<span>${Course.numClass}</span></td>  <td class="tabletext">学生人数：${Course.numStudent}</td>
+                    </tr>
+                    <tr>
+                       <td class="tabletext">开始时间：${Course.startTime}</td>  <td class="tabletext">结束时间:${Course.endTime}</td>
+                    </tr>
+                    </table>
 				</div>
 		    </div>
 		    </#list>

@@ -2,34 +2,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>选择课程</title>
-    <link href="/新选择课程css.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-$(function(){
-$("#select_course").click(function(){
-	if(confirm("是否要选择该课程？"))
-	{
-		var courseid=$(this).attr('data-course-id');
-		alert("courseId="+courseid);
-		$.ajax({
-			url:"/course/select/"+courseid,
-			method:"GET",
-			content:"application/json",
-			success:function(data){
-				alert("选课成功");
-				window.location.href="/course?type=student";
-			},
-			error:function(data){
-				alert("选课失败");
-				window.location.href="/course?type=student";
-			}
-		});
-	}
-});
-
-}); 
-</script>   
+    <link href="../../css/student/StudentChooseCoursePage.css" rel="stylesheet" type="text/css"/>
 </head>
+
 <body>
     	<div class="top">
         	<div class="font">
@@ -46,9 +21,9 @@ $("#select_course").click(function(){
             <div class="navigation">
                 <div class="courseName">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="/me?type=student" style="text-decoration:none">基本信息</a><br>
-                  <a class="guidefont" href="/course?type=student" style="text-decoration:none">课程信息</a><br>
-                  <a class="guidefont" href="/student/select" style="text-decoration:none">选择课程</a><br>
+                <div class="courseIntroduction"><a class="guidefont" href="/me?type=student" style="text-decoration:none">基本信息</a>
+                  <a class="guidefont" href="/course?type=student" style="text-decoration:none">课程信息</a>
+                  <a class="guidefont" href="/student/select" style="text-decoration:none">选择课程</a>
                 </div>
             </div>
             <div class="content">

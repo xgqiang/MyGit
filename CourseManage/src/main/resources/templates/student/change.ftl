@@ -43,9 +43,9 @@ function updateMessageForm()
             <div class="navigation">
                 <div class="courseName">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="/me?type=student" style="text-decoration:none">基本信息</a><br>
-                  <a class="guidefont" href="/course?type=student" style="text-decoration:none">课程信息</a><br>
-                  <a class="guidefont" href="/student/select" style="text-decoration:none">选择课程</a><br>
+                <div class="courseIntroduction"><a class="guidefont" href="/me?type=student" style="text-decoration:none">基本信息</a>
+                  <a class="guidefont" href="/course?type=student" style="text-decoration:none">课程信息</a>
+                  <a class="guidefont" href="/student/select" style="text-decoration:none">选择课程</a>
                 </div>
             </div>
             <div class="content">

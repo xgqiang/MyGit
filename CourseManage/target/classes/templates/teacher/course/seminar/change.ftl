@@ -1,8 +1,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>新建课程</title>
-    <link href="/新新建课程css.css" rel="stylesheet" type="text/css"/>
+    <title>创建话题</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/teacher/content.css">
+    <link rel="stylesheet" href="../../css/teacher/frame.css">
     
 </head>
 <body>
@@ -11,9 +13,9 @@
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="/images/home.png">首页
-        		<img src="/images/help.png">帮助
-        		<img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+        		<img src="Img/home.png">首页
+                <img src="Img/help.png">帮助
+                <img src="Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>

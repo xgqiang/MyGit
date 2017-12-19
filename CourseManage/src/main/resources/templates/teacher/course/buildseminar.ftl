@@ -1,32 +1,9 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>新建课程</title>
-    <link href="/新新建课程css.css" rel="stylesheet" type="text/css"/>
-    <script>
-function createClassForm()
-{
-  $.ajax({
-    url: "/class/seminar/create",
-    dataType: "json",
-    type: "post",
-    content-type:"application/json;charset=utf-8",
-    data: JSON.stringify( { "name": $('#name').val(), "description": $('#description').val(), 
-    "groupingMethod": $('#groupingMethod').val(), "presentation": $('#presentation').val(),
-    "startTime": $('#startTime').val(), "endTime": $('#endTime').val(), "report": $('#report').val(),
-     "a": $('#a').val(), "b": $('#b').val(), "c": $('#c').val()} ),
-    processData: false,
-    success: function( data, textStatus, jQxhr ){
-	//成功回调
-    },
-    error: function( jqXhr, textStatus, errorThrown ){
-	//失败回调
-    }
-});
-      
-}
-
-</script>
+    <title>创建讨论课</title>
+    <link rel="stylesheet" href="/css/common/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/teacher/content.css">
 <script type="text/javascript">
 function roll_back()
 {
@@ -40,9 +17,9 @@ window.history.back(-1);
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="/images/home.png">首页
-        		<img src="/images/help.png">帮助
-        		<img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+        		<img src="/Img/home.png">首页
+                <img src="/Img/help.png">帮助
+                <img src="/Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>

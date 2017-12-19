@@ -1,32 +1,9 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>修改课程</title>
-    <link href="/新新建课程css.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-updateClassForm(){
-	if(confirm("确定保存修改？"))
-	{
-		$.ajax({
-			url:"/course/update",
-			method:"post",
-			content:"application/json",
-			data: JSON.stringify( { "name": $('#name').val(), "startTime": $('#startTime').val(),
-			"endTime": $('#endTime').val(),"description": $('#description').val(),"a": $('#a').val(),
-			"b": $('#b').val(),"c": $('#c').val(), } ),
-			success:function(data){
-				alert("修改成功");
-				window.close();
-			},
-			error:function(data){
-				alert("修改失败");
-				window.close();
-			}
-		});
-	} 
-}
-</script>    
+    <title>新建课程</title>
+    <link href="../../css/teacher/TeacherCreateCoursePage.css"rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="/jquery-3.2.1.min.js"></script>    
 </head>
 <body>
 <br/>

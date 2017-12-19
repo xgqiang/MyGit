@@ -4,28 +4,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>教师基本信息改</title>
-    <link href="/新基本信息改css.css" rel="stylesheet" type="text/css"/>
-    <script>
-function updateMessageForm()
-{
-  $.ajax({
-    url: "/me",
-    dataType: "json",
-    type: "post",
-    content-type:"application/json;charset=utf-8",
-    data: JSON.stringify( {"id": $('#id').val(),"name": $('#name').val(), "number": $('#number').val() , "email": $('#email').val()
-    , "school": $('#school').val(), "gender": $('#gender').val(), "phone": $('#phone').val()} ),
-    processData: false,
-    success: function( data, textStatus, jQxhr ){
-	//成功回调
-    },
-    error: function( jqXhr, textStatus, errorThrown ){
-	//失败回调
-    }
-});
-      
-}
-</script>
+    <link href="../../css/common/InfoModifyPage.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     	<div class="top">
@@ -33,9 +12,9 @@ function updateMessageForm()
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="/images/home.png">首页
-        		<img src="/images/help.png">帮助
-        		<img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+        		<img src="/Img/home.png">首页
+                <img src="/Img/help.png">帮助
+                <img src="/Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -43,15 +22,15 @@ function updateMessageForm()
             <div class="navigation">
                 <div class="courseName">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="/me?type=teacher" style="text-decoration:none">基本信息</a><br>
-                  <a class="guidefont" href="/course?type=teacher" style="text-decoration:none">课程信息</a><br>
-                  <a class="guidefont" href="/course/create" style="text-decoration:none">新建课程</a><br>
+                <div class="courseIntroduction"><a class="guidefont" href="/me?type=teacher" style="text-decoration:none">基本信息</a>
+                  <a class="guidefont" href="/course?type=teacher" style="text-decoration:none">课程信息</a>
+                  <a class="guidefont" href="/course/create" style="text-decoration:none">新建课程</a>
                 </div>
             </div>
             <div class="content">
               <h2 class="newcourse">基本信息</h2>
               <hr class="line"/>
-                <div class="imgarea"><img class="img" src="/images/someone1.jpg"/></div>
+                <div class="imgarea"><img class="img" src="/Img/someone1.jpg"/></div>
                 
                  <div class="info">
                 

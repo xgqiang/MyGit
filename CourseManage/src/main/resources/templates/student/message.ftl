@@ -1,10 +1,10 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>教师基本信息</title>
-    <link href="/新基本信息css.css" rel="stylesheet" type="text/css"/>
-    
+    <title>学生基本信息</title>
+    <link href="../../css/common/HomePage.css" rel="stylesheet" type="text/css"/>    
 </head>
+
 <body>
     	<div class="top">
         	<div class="font">
@@ -21,16 +21,16 @@
             <div class="navigation">
                 <div class="courseName">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="/me?type=student" style="text-decoration:none">基本信息</a><br>
-                  <a class="guidefont" href="/course?type=student" style="text-decoration:none">课程信息</a><br>
-                  <a class="guidefont" href="/student/select" style="text-decoration:none">选择课程</a><br>
+                <div class="courseIntroduction"><a class="guidefont" href="/me?type=student" style="text-decoration:none">基本信息</a>
+                  <a class="guidefont" href="/course?type=student" style="text-decoration:none">课程信息</a>
+                  <a class="guidefont" href="/student/select" style="text-decoration:none">选择课程</a>
                 </div>
             </div>
             <div class="content">
             
                <h2 class="newcourse">基本信息</h2>
                <hr class="line"/>
-                <div class="imgarea"><img class="img" src="/images/someone2.jpg"/></div>
+                <div class="imgarea"><img class="img" src="/Img/someone2.jpg"/></div>
                 
                  <div class="info">
         <table class="table">

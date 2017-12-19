@@ -20,86 +20,9 @@
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-<style type="text/css">
-body {background-image:url("back.png");
-background-repeat:no-repeat;
-background-size:100%!important;
- width:100%;  
-    height:100%;  
-  overflow: hidden;
-   position: fixed;
-font-size:100%;}
-.GreyPanel
-{
-width: 45%;
-height: 100%;
-background-color: #262626;
-opacity:0.4;
-  filter:alpha(opacity=40); 
-  position:absolute;
-  left:55%;
-  top:0%;
-}
-.ClassManage
-{
- position:absolute;
-  left:61%;
-  top:15%;
-font-size: 7.2em;
-font-family:"YouYuan";
-font-weight:bold;
-color:white;
-width: 600px;
-}
-.LoginWayOne
-{
-position:absolute;
-  left:70%;
-  top:33%;
- width: 9%;
- height: 5%;
-background-color:#FFFFFF;
-font-size:1.5em;
-text-align:center;
-font-family:"Arial";
-}
-.LoginWayTwo
-{
-position:absolute;
-  left:79%;
-  top:33%;
- width: 6%;
- height: 5%;
-background-color:#00FFFF;
-font-size:1.5em;
-text-align:center;
-font-family:"Arial";
-}
-.WechatText
-{
-position:absolute;
-  left:70%;
-  top:77%;
-font-size:32px;
-color:#0;
-font=family="Arial";
-}
-Identity
-{
-position:absolute;
-  left:74%;
-  top:72%;
-font-size:2em;
-
-}
-.QRCode
-{
-position:absolute;
-  left:71%;
-  top:45%;
-}
-</style>
+    <link href="../../css/common/WechatLoginPage.css" rel="stylesheet" type="text/css"/>
 </head>
+
 <body>
 <div class="GreyPanel"></div>
 <div class="ClassManage">课堂管理系统</div>
@@ -109,6 +32,6 @@ position:absolute;
 <Identity>
 <input id="man" type="radio" checked="checked" name="1" />老师<input id="woman" type="radio"  name="1"/>学生
 </Identity>
-<img src="二维码.png" class="QRCode">
+<img src="Img/qrcode.png" class="QRCode">
 </body>
 </html>

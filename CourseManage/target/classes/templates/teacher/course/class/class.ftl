@@ -1,9 +1,11 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>班级信息</title>
-    <link rel="stylesheet" href="./bootstrap.min.css">
-    <link rel="stylesheet" href="/content.css">
+   <link rel="stylesheet" href="../../css/teacher/content.css">
 <script type="text/javascript">
 function roll_back()
 {
@@ -18,9 +20,9 @@ window.history.back(-1);
             课堂管理系统
           </div>
           <div class="icon">
-            <img src="/images/home.png">首页
-            <img src="/images/help.png">帮助
-            <img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+            <img src="Img/home.png">首页
+            <img src="Img/help.png">帮助
+            <img src="Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
           </div>
           <div class="clear"></div>
         </div>

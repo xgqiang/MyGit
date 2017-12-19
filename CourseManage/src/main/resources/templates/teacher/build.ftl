@@ -2,7 +2,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>新建课程</title>
-    <link href="/新新建课程css.css" rel="stylesheet" type="text/css"/>
+    <link href="../../css/teacher/TeacherCreateCoursePage.css"rel="stylesheet" type="text/css"/>
     <script>
 function createCourseForm()
 {
@@ -34,9 +34,9 @@ function createCourseForm()
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="/images/home.png">首页
-        		<img src="/images/help.png">帮助
-        		<img src="/images/exit.png"><a href="/home" style="text-decoration:none">退出</a>
+        		<img src="Img/home.png">首页
+                <img src="Img/help.png">帮助
+                <img src="Img/exit.png"><a href="/home" style="text-decoration:none">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -45,9 +45,9 @@ function createCourseForm()
                 <div class="courseName">导航</div>
                 <div class="line"></div>
                 <div class="courseIntroduction">
-                  <a class="guidefont" href="/me?type=teacher" style="text-decoration:none">基本信息</a><br>
-                  <a class="guidefont" href="/course?type=teacher" style="text-decoration:none" >课程信息</a><br>
-                  <a class="guidefont" href="/course/create" style="text-decoration:none" onclick="return createcourseForm()">新建课程</a><br>
+                  <a class="guidefont" href="/me?type=teacher" style="text-decoration:none">基本信息</a>
+                  <a class="guidefont" href="/course?type=teacher" style="text-decoration:none" >课程信息</a>
+                  <a class="guidefont" href="/course/create" style="text-decoration:none" onclick="return createcourseForm()">新建课程</a>
                 </div>
             </div>
             <div class="content">

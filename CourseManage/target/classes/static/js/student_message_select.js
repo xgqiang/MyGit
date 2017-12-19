@@ -1,0 +1,22 @@
+$(function(){
+$("#select_course").click(function(){
+	if(confirm("是否要选择该课程？"))
+	{
+		var courseid=$(this).attr('data-course-id');
+		alert("courseId="+courseid);
+		$.ajax({
+			url:"/course/select/"+courseid,
+			method:"GET",
+			content:"application/json",
+			success:function(data){
+				alert("选课成功");
+				window.location.href="/course?type=student";
+			},
+			error:function(data){
+				alert("选课失败");
+				window.location.href="/course?type=student";
+			}
+		});
+	}
+});
+}); 
