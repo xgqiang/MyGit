@@ -5,21 +5,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
-import coursemanagesystem.service.impl.SeminarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequestMapping("/seminar")
 public class SeminarController {
 	@Autowired
-	SeminarServiceImpl seminarService = new SeminarServiceImpl();
+	//SeminarServiceImpl seminarService = new SeminarServiceImpl();
 	
 	/*@RequestMapping(value="/manage",method=GET)
 	public String get_seminar_manage(@RequestParam("seminarId") String seminarId,@RequestParam("type") String type,

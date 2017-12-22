@@ -4,23 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
-
-import coursemanagesystem.entity.School;
-import coursemanagesystem.mapper.SchoolMapper;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import coursemanagesystem.SchoolApplication;
-import coursemanagesystem.entity.School;
-import coursemanagesystem.mapper.SchoolMapper;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes=SchoolApplication.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class SchoolControllerTest {
 	/*@Autowired
     private SchoolMapper schoolMapper;

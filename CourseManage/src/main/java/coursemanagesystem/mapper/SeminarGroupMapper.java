@@ -20,15 +20,15 @@ public interface SeminarGroupMapper {
     BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup);
     void deleteSeminarGroupByGroupId(BigInteger groupId);
     SeminarGroup getSeminarGroupByGroupId(BigInteger groupId);
-    BigInteger getSeminarGroupById1(BigInteger userId, BigInteger seminarId);
+    //BigInteger getSeminarGroupById1(BigInteger userId, BigInteger seminarId);
     BigInteger getSeminarGroupLeaderById(BigInteger userId, BigInteger seminarId);
-    BigInteger insertStudnetIntoGroup(BigInteger userId, BigInteger groupId);
+    //BigInteger insertStudnetIntoGroup(BigInteger userId, BigInteger groupId);
     BigInteger insertTopicByGroupId(BigInteger groupId, BigInteger topicId);
-    void automaticallyGrouping(BigInteger seminarId, BigInteger classId);
+   // void automaticallyGrouping(BigInteger seminarId, BigInteger classId);
     void assignLeaderById(BigInteger groupId,BigInteger userId);
     void resignLeaderById(BigInteger groupId,BigInteger userId);
-    BigInteger updateSeminarGroupById(BigInteger groupId, Group group);
+    //BigInteger updateSeminarGroupById(BigInteger groupId, Group group);
     SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId);
-    List<SeminarGroup> listGroupBySeminarId(BigInteger seminarId);
+   // List<SeminarGroup> listGroupBySeminarId(BigInteger seminarId);
     List<SeminarGroup> listGroupByTopicId(BigInteger topicId);
 }

@@ -29,10 +29,6 @@
         <result column="class_id" property="classInfo.id" />
         <result column="leader_id" property="leader.id" />
     </resultMap>
-    <delete id="deleteSeminarGroupMemberBySeminarGroupId">
-        delete from seminar_group_member
-        where seminar_group_id=#{seminarGroupId}
-    </delete>
 
     <insert id="insertSeminarGroupMemberById">
         insert into seminar_group_member(seminar_group_id,student_id)
@@ -41,6 +37,60 @@
             SELECT last_insert_id()
         </selectKey>
     </insert>
+    <insert id="insertSeminarGroupBySeminarId" parameterType="SeminarGroup">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroup.id">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into seminar_group(seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id)
+        values(#{seminarId},#{seminarGroup.report},#{seminarGroup.reportGrade},#{seminarGroup.presentationGrade},
+        #{seminarGroup.finalGrade},#{seminarGroup.report},#{seminarGroup.classInfo.id},#{seminarGroup.leader.id})
+    </insert>
+    <insert id="insertSeminarGroupMemberByGroupId">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroupMember.id">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into seminar_group_member(seminar_group_id, student_id)
+        values(#{groupId},#{student.id})
+    </insert>
+    <insert id="insertTopicByGroupId">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="id">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into seminar_group_topic(topic_id, seminar_group_id)
+        values(#{topicId},#{groupId})
+    </insert>
+
+
+    <update id="assignLeaderById">
+        update seminar_group
+        set leader_id=#{userId}
+        where id=#{groupId}
+        and leader_id is null
+    </update>
+    <update id="resignLeaderById">
+        update seminar_group
+        set leader_id=null
+        where id=#{groupId}
+    </update>
+
+
+    <delete id="deleteSeminarGroupMemberBySeminarGroupId">
+        delete from seminar_group_member
+        where seminar_group_id=#{seminarGroupId}
+    </delete>
+    <delete id="deleteSeminarGroupBySeminarId">
+        delete from seminar_group
+        where seminar_id =#{seminarId}
+    </delete>
+    <delete id="deleteSeminarGroupByGroupId">
+        delete from seminar_group
+        where id=#{seminarGroupId}
+    </delete>
+    <delete id="deleteTopicByGroupId">
+        delete from seminar_group_topic
+        where seminar_group_id=#{groupId}
+    </delete>
+
 
     <select id="listSeminarGroupMemberByGroupId" resultMap="User">
         select id,phone, wechat_id, openid, avatar, password, name, school_id, gender, type, number, education, title, email
@@ -50,7 +100,6 @@
         from seminar_group_member
         where seminar_group_id=#{groupId})
     </select>
-
     <select id="listSeminarGroupIdByStudentId" resultMap="SeminarGroupResultMap">
         select id,seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
@@ -59,52 +108,21 @@
         from seminar_group_member
         where student_id=#{studentId})
     </select>
-
     <select id="getSeminarGroupLeaderByGroupId" resultType="java.math.BigInteger">
         select leader_id
         from seminar_group
         where id =#{groupId}
     </select>
-
     <select id="listSeminarGroupBySeminarId" resultMap="SeminarGroupResultMap">
         select id,seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
         where seminar_id =#{seminarId}
     </select>
-
-    <delete id="deleteSeminarGroupBySeminarId">
-        delete from seminar_group
-        where seminar_id =#{seminarId}
-    </delete>
-
-    <insert id="insertSeminarGroupBySeminarId" parameterType="SeminarGroup">
-        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroup.id">
-            SELECT last_insert_id()
-        </selectKey>
-        insert into seminar_group(seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id)
-        values(#{seminarId},#{seminarGroup.report},#{seminarGroup.reportGrade},#{seminarGroup.presentationGrade},
-        #{seminarGroup.finalGrade},#{seminarGroup.report},#{seminarGroup.classInfo.id},#{seminarGroup.leader.id})
-    </insert>
-
-    <insert id="insertSeminarGroupMemberByGroupId">
-        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroupMember.id">
-            SELECT last_insert_id()
-        </selectKey>
-        insert into seminar_group_member(seminar_group_id, student_id)
-        values(#{groupId},#{student.id})
-    </insert>
-
-    <delete id="deleteSeminarGroupByGroupId">
-        delete from seminar_group
-        where id=#{seminarGroupId}
-    </delete>
-
     <select id="getSeminarGroupByGroupId" resultType="SeminarGroup">
         select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
         where id=#{groupId}
     </select>
-
     <select id="getSeminarGroupLeaderById" resultType="java.math.BigInteger">
         select leader_id
         from seminar_group
@@ -114,11 +132,9 @@
         from seminar_group_member
         where student_id=#{userId})
     </select>
-
     <select id="automaticallyGrouping">
         select leader_id from seminar_group WHERE id=#{seminarId}
     </select>
-
     <select id="getSeminarGroupById" resultType="SeminarGroup">
         select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
@@ -128,7 +144,6 @@
         from seminar_group_member
         where student_id=#{userId})
     </select>
-
     <select id="listGroupByTopicId" resultType="SeminarGroup">
         select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
@@ -136,33 +151,6 @@
         (select seminar_group_id
         from seminar_group_topic
         where topic_id=#{topicId})
-    </select>s
-
-    <insert id="insertTopicByGroupId">
-        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="id">
-            SELECT last_insert_id()
-        </selectKey>
-        insert into seminar_group_topic(topic_id, seminar_group_id)
-        values(#{topicId},#{groupId})
-    </insert>
-
-    <delete id="deleteTopicByGroupId">
-        delete from seminar_group_topic
-        where seminar_group_id=#{groupId}
-    </delete>
-
-
-    <update id="assignLeaderById">
-        update seminar_group
-        set leader_id=#{userId}
-        where id=#{groupId}
-        and leader_id is null
-    </update>
-
-    <update id="resignLeaderById">
-        update seminar_group
-        set leader_id=null
-        where id=#{groupId}
-    </update>
+    </select>
 
 </mapper>

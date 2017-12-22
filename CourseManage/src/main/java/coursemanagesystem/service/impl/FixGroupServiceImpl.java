@@ -20,9 +20,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 	 */
 
 	public void deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId) {
-		
-		//删除自己
-		return true;
+
 	};
 	
 	/**
@@ -77,8 +75,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 
 	public void deleteFixGroupByClassId(BigInteger classId) {
 		
-		//删除自己
-		return true;
+
 	};
     
     /**
@@ -107,8 +104,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 
 	public void deleteFixGroupByGroupId(BigInteger groupId)
     {
-    	Boolean state=Boolean.valueOf(false);
-    	return state;
+
     }
     
     /**
@@ -122,8 +118,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 
 	public void updateFixGroupByGroupId(BigInteger groupId,FixGroup fixGroupBO)
     {
-    	Boolean state=Boolean.valueOf(false);
-    	return state;
+
     }
     
     /**
@@ -166,8 +161,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 	 */
 
 	public void deleteTopicByGroupId(BigInteger groupId) {
-		//TopicDao.deleteTopicByGroupId(BigInteger groupId)
-		return true;
+
 	}
 
     /**
@@ -176,8 +170,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 	 * @author heqi
 	 * @param userId 学生id
 	 * @param classId 班级id
-	 * @return GroupBO 返回班级固定小组的信息 
-	 * @see UserServiceImpl#getUserByUserId(BigInteger UserId)
+	 * @return GroupBO 返回班级固定小组的信息
 	 */
 
 	public FixGroup getFixedGroupById(BigInteger userId,BigInteger classId){
@@ -220,11 +213,10 @@ public class FixGroupServiceImpl implements FixGroupService {
 	 * @param groupId 要修改的group的Id
 	 * @param group 新的group信息
 	 * @return Boolean 若更新成功返回true，失败返回false
-	 * @exception InfoIllegalException  信息不合法，id格式错误
+	// * @exception InfoIllegalException  信息不合法，id格式错误
 	 * @exception FixGroupNotFoundException 未找到小组
 	 */
 	public void updateSeminarGroupById(BigInteger groupId,SeminarGroup group) throws
-			InfoIllegalException,FixGroupNotFoundException{
-		return false;
+			FixGroupNotFoundException{
 	}
 }
