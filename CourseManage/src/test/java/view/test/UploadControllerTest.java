@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import course.entity.URL;
 
 
 
@@ -37,13 +36,13 @@ public class UploadControllerTest {
      * @return
      * @throws JsonProcessingException
      */
-    @RequestMapping(value="/avatar",method=POST)
+    /*@RequestMapping(value="/avatar",method=POST)
     @ResponseBody
     public Object getAvatar() throws JsonProcessingException{
         URL url=new URL();
         url.setUrl("//XXXX//XXXX");
         return url;
-    }
+    }*/
     
     /**
      * 上传班级学生名单

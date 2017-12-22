@@ -1,30 +1,38 @@
 package coursemanagesystem.service.impl;
 
 import java.math.BigInteger;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
+import coursemanagesystem.entity.SeminarGroup;
+import coursemanagesystem.entity.SeminarGroupMember;
+import coursemanagesystem.entity.User;
+import coursemanagesystem.exception.GroupNotFoundException;
+import coursemanagesystem.exception.InvalidOperationException;
+import coursemanagesystem.exception.UserNotFoundException;
+import coursemanagesystem.mapper.SeminarGroupMapper;
+import coursemanagesystem.service.SeminarGroupService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import course.bo.GroupBO;
-import course.bo.SeminarGroupBO;
-import course.bo.UserBO;
-import course.service.SeminarGroupService;
 
 @Service
-public class SeminarGroupServiceImpl implements SeminarGroupService{
+public class SeminarGroupServiceImpl implements SeminarGroupService {
 	/**
 	 * 按seminarGroupId删除SeminarGroupMember信息.
 	 * @author zhouzhongjun
      * @param seminarGroupId 讨论课小组Id
      *  @return true/false 是否成功删除
 	 */
-
-	public boolean deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) {
-			
-		//删除自己
-		return true;
+	@Autowired
+	private SeminarGroupMapper SeminarGroupMapper;
+    /**
+     * 按seminarGroupId删除SeminarGroupMember信息.
+     * @author zhouzhongjun
+     * @param seminarGroupId 讨论课小组Id
+     * @return true/false 是否成功删除
+     */
+	public void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) {
+		SeminarGroupMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupId);
 	};
 	
 	/**
@@ -36,10 +44,10 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @return BigInteger 若创建成功返回该条记录的id，失败则返回-1
 	 */
 
-	public BigInteger insertSeminarGroupMemberById(BigInteger userId,BigInteger groupId)
-    {
-    	BigInteger recordId = BigInteger.valueOf(-1);
-    	return recordId;
+     //throws IllegalArgumentException,UserNotFoundException,GroupNotFoundException,InvalidOperationException
+	public BigInteger insertSeminarGroupMemberById(BigInteger userId,BigInteger groupId) {
+		BigInteger id=SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId);
+		return id;
     }
     
 	/**
@@ -50,10 +58,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @return List 讨论课小组成员信息
 	 */
 
-	public List<UserBO> listSeminarGroupMemberByGroupId(BigInteger groupId)
-    {
-    	List<UserBO> userBOs=null;
-    	return userBOs;
+	public List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) {
+    	List<User> users=SeminarGroupMapper.listSeminarGroupMemberByGroupId(groupId);
+    	return users;
     }
     
 	/**
@@ -65,11 +72,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @return list 讨论课小组列表
 	 */
 
-	public List<BigInteger> listSeminarGroupIdByStudentId(BigInteger userId)
-    {
-    	List<BigInteger> list = new ArrayList();
-    	
-    	return list;
+	public List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) {
+    	List<SeminarGroup> serminarGroups = SeminarGroupMapper.listSeminarGroupIdByStudentId(userId);
+    	return serminarGroups;
     }
     
     
@@ -81,11 +86,12 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @return leaderId 讨论课小组队长id
 	 */
 
-	public BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId)
-    {
-    	BigInteger leaderId=null;
+	public BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId) {
+    	BigInteger leaderId=SeminarGroupMapper.getSeminarGroupLeaderByGroupId(groupId);
     	return leaderId;
     }
+
+
 	/**
 	 * 按seminarId获取SeminarGroup.
 	 * @author zhouzhongjun
@@ -93,9 +99,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
      * @return null 讨论课小组列表
 	 */
 
-	public List<SeminarGroupBO> listSeminarGroupBySeminarId(BigInteger seminarId) {
-			
-		return null;
+	public List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId) {
+		List<SeminarGroup> seminarGroups=SeminarGroupMapper.listSeminarGroupBySeminarId(seminarId);
+		return seminarGroups;
 	};
 	
 	/**
@@ -108,24 +114,37 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @return true删除成功 false删除失败
 	 */
 
-	public boolean deleteSeminarGroupBySeminarId(BigInteger seminarId) {
-			
-		//删除自己
-		return true;
+	public void deleteSeminarGroupBySeminarId(BigInteger seminarId) {
+		SeminarGroupMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarId);
+		SeminarGroupMapper.deleteSeminarGroupBySeminarId(seminarId);
 	};
+
+
+	/**
+	 * 创建小组成员信息.
+	 * ＜p＞在指定小组成员表下创建一个新的小组信息<br>*
+	 * @param groupId 小组的id
+	 * @param seminarGroupMember 小组成员信息
+	 * @return BigInteger 若创建成功返回该小组成员表的id，失败则返回-1
+	 */
+	public BigInteger insertSeminarGroupMemberByGroupId(BigInteger groupId,
+												 SeminarGroupMember seminarGroupMember){
+
+		BigInteger seminarGroupMemberId = SeminarGroupMapper.insertSeminarGroupMemberByGroupId(groupId,seminarGroupMember);
+		return seminarGroupMemberId;
+	}
 
 	/**
 	 * 创建讨论课小组.
 	 * ＜p＞在指定讨论课下创建讨论课小组<br>*
 	 * @author YeHongjie
 	 * @param seminarId 讨论课的id
-	 * @param seminarGroupBO 小组信息
+	 * @param seminarGroup 小组信息
 	 * @return BigInteger 若创建成功返回该小组的id，失败则返回-1
 	 */
 
-	public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId,SeminarGroupBO seminarGroupBO)
-    {
-    	BigInteger seminarGroupId = BigInteger.valueOf(-1);
+	public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId,SeminarGroup seminarGroup) {
+    	BigInteger seminarGroupId = SeminarGroupMapper.insertSeminarGroupBySeminarId(seminarId,seminarGroup);
     	return seminarGroupId;
     }
     
@@ -138,10 +157,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @see SeminarGroupServiceImpl #deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId)
 	 */
 
-	public Boolean deleteSeminarGroupByGroupId(BigInteger groupId)
-    {
-    	Boolean state=Boolean.valueOf(false);
-    	return state;
+	public void deleteSeminarGroupByGroupId(BigInteger groupId) {
+		SeminarGroupMapper.deleteSeminarGroupByGroupId(groupId);
     }
     
     /**
@@ -153,30 +170,55 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @see SeminarGroupServiceImpl #listSeminarGroupMemberByGroupId(BigInteger groupId)
 	 */
 
-	public SeminarGroupBO getSeminarGroupByGroupId(BigInteger groupId)
-    {
-    	SeminarGroupBO seminarGroupBO=null;
-    	return seminarGroupBO;
+	public SeminarGroup getSeminarGroupByGroupId(BigInteger groupId) {
+		SeminarGroup seminarGroup=SeminarGroupMapper.getSeminarGroupByGroupId(groupId);
+    	return seminarGroup;
     }
-    
-    /**
-	 * 获取学生所在讨论课小组.
-	 * ＜p＞按照用户id和讨论课id获取学生所在讨论课小组id<br>*
-	 * @author YeHongjie
-	 * @param userId 用户的id
-	 * @param seminarId 讨论课id
-	 * @return BigInteger 讨论课小组的id，若未找到相关小组返回空(null)
-	 */
 
-	public BigInteger getSeminarGroupById1(BigInteger userId, BigInteger seminarId)
-    {
-    	//Maybe you need to use intersection while querying
-    	//if you have some advice, contract me@YeHonjie, thanks!
-    	BigInteger groupId=null;
-    	return groupId;
-    }
-   
-    
+
+	/**
+	 * 根据讨论课Id及用户id，获得该用户所在的讨论课的小组的信息.
+	 * @param seminarId (讨论课的id)
+	 * @param userId（用户的id）
+	 * @return SeminarGroup Group的相关信息
+	// * @exception InfoIlleglException 信息不合法，id格式错误
+	 * @exception GroupNotFoundException 未找到小组
+	 */
+	public SeminarGroup getSeminarGroupById(BigInteger seminarId,BigInteger userId){
+		SeminarGroup seminarGroup=SeminarGroupMapper.getSeminarGroupById(seminarId,userId);
+		return seminarGroup;
+	}
+
+
+	/**
+	 * 根据话题Id获得选择该话题的所有小组的信息.
+	 * @param  topicId 话题的id
+	 * @return List 所有选择该话题的所有group的信息
+	 //* @exception InfoIllegalException 信息不合法，id格式错误
+	 * @exception GroupNotFoundException 未找到小组
+	 */
+	public List<SeminarGroup> listGroupByTopicId(BigInteger topicId){
+		List<SeminarGroup> seminarGroupList=SeminarGroupMapper.listGroupByTopicId(topicId);
+		return seminarGroupList;
+	}
+
+
+	/**
+	 * 小组按id选择话题.
+	 * <p>小组通过小组id和话题id选择讨论课的话题<br>
+	 * @author heqi
+	 * @param groupId 小组id
+	 * @param topicId 话题id
+	 * @return String 返回一个url
+	// * @exception InfoIllegalException GroupId、TopicId格式错误时抛出
+	 * @exception GroupNotFoundException 该小组不存在时抛出
+	 */
+	public BigInteger insertTopicByGroupId(BigInteger groupId, BigInteger topicId){
+		BigInteger seminarGroupTopicId=SeminarGroupMapper.insertTopicByGroupId(groupId,topicId);
+		return seminarGroupTopicId;
+	}
+
+
     /**
 	 * 获取学生所在讨论课队长.
 	 * ＜p＞按照用户id和讨论课id获取学生所在讨论课小组队长<br>*
@@ -188,26 +230,12 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @see SeminarGroupServiceImpl #getSeminarGroupLeaderByGroupId(BigInteger groupId)
 	 */
 
-	public BigInteger getSeminarGroupLeaderById(BigInteger userId, BigInteger seminarId)
-    {
-    	BigInteger groupId=null;
-    	return groupId;
+	public BigInteger getSeminarGroupLeaderById(BigInteger userId, BigInteger seminarId) {
+    	BigInteger leaderId=SeminarGroupMapper.getSeminarGroupLeaderById(userId,seminarId);
+    	return leaderId;
     }
 
-    /**
-	 * 将学生加入小组.
-	 * ＜p＞将用户加入指定的小组<br>*
-	 * @author YeHongjie
-	 * @param userId 学生的id
-	 * @param groupId 要加入小组的id
-	 * @return BigInteger 若创建成功返回该条记录的id，失败则返回-1
-	 */
 
-	public BigInteger insertStudnetIntoGroup(BigInteger userId,BigInteger groupId)
-    {
-    	BigInteger recordId = BigInteger.valueOf(-1);
-    	return recordId;
-    }
 
     /**
 	 * 自动分组.
@@ -218,66 +246,38 @@ public class SeminarGroupServiceImpl implements SeminarGroupService{
 	 * @return Boolean 自动分组成功返回true，否则返回false
 	 */
 
-	public Boolean automaticallyGrouping(BigInteger seminarId,BigInteger classId)
+	public void automaticallyGrouping(BigInteger seminarId,BigInteger classId)
     {
-    	Boolean groupingState=Boolean.valueOf(false);
-    	return groupingState;
+
     }
-    
-    /**
-     * 根据groupId修改group.
-     * <p>根据groupId修改group<br>
-     * @author aixing
-     * @param groupId 要修改的group的Id
-     * @param group 新的group信息
-     * @return
-     */
-
-	public BigInteger updateSeminarGroupById(BigInteger groupId,GroupBO group){
-        BigInteger bi=null;
-        //修改此group
-        return bi;
-    }
-
-    
-     /**
-     * 根据讨论课Id及用户id，获得该用户所在的讨论课的小组的信息.
-     * @param BigInteger seminarId (讨论课的id)
-     * @param BigInteger userId（用户的id）
-     * @return GroupBO Group的相关信息
-     */
-
-	public GroupBO getSeminarGroupById(BigInteger seminarId,BigInteger userId){
-          GroupBO groupBO;
-          ResultSet rs;
-          //rs = GroupDao.listGroupBySeminarId(BigInteger seminarId);
-          //for groupBO in rs
-          //   if (GroupDao.(groupBO,userId)) //如果该用户在该小组中，则直接返回此小组的信息
-          //          return groupBO;
-          return null;   //如果该用户不在该讨论课的任何小组中返回空
-    };
-
-    /**
-	 * 根据讨论课Id获得属于该讨论课的所有小组信息.
-	 * @param seminarId 讨论课的id
-	 * @return List<GroupBO> 所有group的信息
-	 */
-
-    public List<GroupBO> listGroupBySeminarId(BigInteger seminarId)  {
-        List<GroupBO> list;
-		//list = GroupDao.listGroupBySeminarId(BigInteger seminarId);
-		return null;
-	}
 
 	/**
-	 * 根据话题Id获得选择该话题的所有小组的信息.
-	 * @param  topicId(话题的id)
-	 * @return  List<GroupBO> 所有选择该话题的所有group的信息
+	 * 成为组长.
+	 * <p>同学按小组id和自身id成为组长<br>
+	 * @param groupId 小组id
+	 * @param userId  学生id
+	 * @return true/false 返回成为组长是否成功
+	// * @exception InfoIllegalException 信息不合法，id格式错误
+	 * @exception GroupNotFoundException 未找到小组
+	 * @exception UserNotFoundException 不存在该学生
+	 * @exception InvalidOperationException 已经有组长了
 	 */
-
-    public List<GroupBO> listGroupByTopicId(BigInteger topicId) {
-        List<GroupBO> list;
-		//list = GroupDao. listGroupByTopicId(BigInteger topicId);
-		return null;
+	public void assignLeaderById(BigInteger groupId,BigInteger userId){
+		SeminarGroupMapper.assignLeaderById(groupId,userId);
 	}
+
+
+	/**
+	 * 组长辞职.
+	 * <p>同学按小组id和自身id,辞掉组长职位<br>
+	 * @param groupId 小组id
+	 * @param userId  学生id
+	 * @return true/false 返回组成辞职是否成功
+	// * @exception InfoIllegalException (信息不合法，id格式错误)
+	 * @exception GroupNotFoundException (未找到小组)
+	 */
+	public void resignLeaderById(BigInteger groupId,BigInteger userId){
+		SeminarGroupMapper.resignLeaderById(groupId,userId);
+	}
+
 }

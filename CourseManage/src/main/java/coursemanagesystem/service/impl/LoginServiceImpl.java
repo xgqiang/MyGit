@@ -8,7 +8,13 @@ import java.math.BigInteger;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-    User signInWeChat(BigInteger userId, String code, String state, String successUrl);
-    User signInPhone(User user){
+    public User signInWeChat(BigInteger userId, String code,
+                             String state, String successUrl){
+        User user=new User();
+        return user;
+    }
+
+    public User signInPhone(User user){
+        return user;
     }
 }

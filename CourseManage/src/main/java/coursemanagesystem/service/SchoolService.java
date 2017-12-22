@@ -22,7 +22,7 @@ public interface SchoolService {
 	 * @param school 学校的信息
 	 * @return true（添加学校成功）/false（添加学校未成功）
 	 */
-	Boolean insertSchool(School school);
+	void insertSchool(School school);
 
 	/**
 	 * 获取省份列表.

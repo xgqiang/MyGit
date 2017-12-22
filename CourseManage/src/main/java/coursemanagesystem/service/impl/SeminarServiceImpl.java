@@ -3,23 +3,21 @@ package coursemanagesystem.service.impl;
 import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import coursemanagesystem.entity.FixGroup;
+import coursemanagesystem.entity.Seminar;
+import coursemanagesystem.entity.Topic;
+import coursemanagesystem.service.SeminarService;
 import org.springframework.stereotype.Service;
-
-import course.bo.GroupBO;
-import course.bo.SeminarBO;
-import course.bo.TopicBO;
-import course.entity.Seminar;
-import course.service.SeminarService;
 
 
 
 @Service
-public class SeminarServiceImpl implements SeminarService{
+public class SeminarServiceImpl implements SeminarService {
 	
 	/**
 	 * 按courseId获取Seminar.
@@ -28,7 +26,7 @@ public class SeminarServiceImpl implements SeminarService{
      * @return null 讨论课列表
 	 */
 
-	public List<SeminarBO> listSeminarByCourseId(BigInteger courseId) {
+	public List<Seminar> listSeminarByCourseId(BigInteger courseId) {
 			
 		return null;
 	};
@@ -40,12 +38,12 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @author zhouzhongjun
      * @param courseId 课程Id
 	 *@see SeminarServiceImpl #listSemiarByCourseId(BigInteger courseId)
-	 *@see TopicService   #deleteTopicBySeminarId(BigInteger seminarId)
-	 *@see SeminarGroupService  #deleteSeminarGroupBySeminarId(BigInteger seminarId)
+	 *@see TopicServiceImpl  #deleteTopicBySeminarId(BigInteger seminarId)
+	 *@see SeminarGroupServiceImpl  #deleteSeminarGroupBySeminarId(BigInteger seminarId)
 	 * @return true删除成功 false删除失败
 	 */
 
-	public boolean deleteSeminarByCourseId(BigInteger courseId) {
+	public void deleteSeminarByCourseId(BigInteger courseId) {
 			
 		//删除自己
 		return true;
@@ -58,11 +56,11 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @param seminarId 讨论课的id
 	 * @param userId 用户的id
 	 * @return 当前讨论课的信息
-	 * @see SeminarGroupService #getSeminarGroupById(BigInteger userId, BigInteger seminarId)
+	 * @see SeminarGroupServiceImpl #getSeminarGroupById(BigInteger userId, BigInteger seminarId)
 	 */
 
-	public SeminarBO getMySeminarBySeminarId(BigInteger seminarId,BigInteger userId){
-		SeminarBO nowSeminar = new SeminarBO();
+	public Seminar getMySeminarBySeminarId(BigInteger seminarId,BigInteger userId){
+		Seminar nowSeminar = new Seminar();
 		return nowSeminar;
 	}
 	
@@ -76,9 +74,9 @@ public class SeminarServiceImpl implements SeminarService{
 	 * 
 	 */
 
-	public SeminarBO getSeminarDetailBySeminarId(BigInteger seminarId,BigInteger userId){
-		
-		SeminarBO nowSeminar = new SeminarBO();
+	public Seminar getSeminarDetailBySeminarId(BigInteger seminarId,BigInteger userId){
+
+		Seminar nowSeminar = new Seminar();
 		return nowSeminar;
 	}
 	
@@ -90,8 +88,8 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @return 相应的讨论课信息
 	 */
 
-	public SeminarBO getSeminarBySeminarId(BigInteger seminarId){
-		SeminarBO seminar = new SeminarBO();
+	public Seminar getSeminarBySeminarId(BigInteger seminarId){
+		Seminar seminar = new Seminar();
 		return seminar;
 	}
 	
@@ -104,7 +102,7 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @return true(修改成功), false(修改失败)
 	 */
 
-	public boolean updateSeminarBySeminarId(BigInteger seminarId, SeminarBO seminar){
+	public void updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar){
 		return true;
 	}
 	
@@ -114,13 +112,13 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @author CaoXingmei
 	 * @param seminarId 讨论课的id
 	 * @return true(删除成功), false(删除失败)
-	 * @see SeminarGroupService #deleteSeminarGroupBySeminarId(BigInteger seminarId)
-	 * @see TopicService#deleteTopicBySeminarId(BigInteger seminarId)
+	 * @see SeminarGroupServiceImpl #deleteSeminarGroupBySeminarId(BigInteger seminarId)
+	 * @see TopicServiceImpl#deleteTopicBySeminarId(BigInteger seminarId)
 	 */
 
-	public boolean deleteSeminarBySeminarId(BigInteger seminarId){
-		List<TopicBO> topicList = new ArrayList<TopicBO>();
-		List<GroupBO> groupList = new ArrayList<GroupBO>();
+	public void deleteSeminarBySeminarId(BigInteger seminarId){
+		List<Topic> topicList = new ArrayList<Topic>();
+		List<FixGroup> groupList = new ArrayList<FixGroup>();
 		return true;
 	}
 	
@@ -133,7 +131,7 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @return seminarId 若创建成功返回创建的讨论课id，失败则返回-1
 	 */
 
-	public BigInteger insertSeminarByCourseId(BigInteger courseId, SeminarBO seminarBO)
+	public BigInteger insertSeminarByCourseId(BigInteger courseId, Seminar seminarBO)
 	{
 		
 		BigInteger seminarId=BigInteger.valueOf(-1);
@@ -146,8 +144,8 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @return null 所有group的信息
 	 */
 
-	public List<GroupBO> listGroupBySeminarId(BigInteger seminarId)  {
-        List<GroupBO> list;
+	public List<FixGroup> listGroupBySeminarId(BigInteger seminarId)  {
+        List<FixGroup> list;
 		//list = GroupDao.listGroupBySeminarId(BigInteger seminarId);
 		return null;
 	}
@@ -159,8 +157,8 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @return  null 所有选择该话题的所有group的信息
 	 */
 
-	public List<GroupBO> listGroupByTopicId(BigInteger topicId) {
-        List<GroupBO> list;
+	public List<FixGroup> listGroupByTopicId(BigInteger topicId) {
+        List<FixGroup> list;
 		//list = GroupDao. listGroupByTopicId(BigInteger topicId);
 		return null;
 	}
@@ -172,8 +170,8 @@ public class SeminarServiceImpl implements SeminarService{
      * @return null Group的相关信息
      */
 
-	public GroupBO getSeminarGroupById(BigInteger seminarId,BigInteger userId){
-          GroupBO groupBO;
+	public FixGroup getSeminarGroupById(BigInteger seminarId,BigInteger userId){
+		FixGroup groupBO;
           ResultSet rs;
           //rs = GroupDao.listGroupBySeminarId(BigInteger seminarId);
           //for groupBO in rs
@@ -192,7 +190,7 @@ public class SeminarServiceImpl implements SeminarService{
      * @return bi
      */
 
-    public BigInteger updateSeminarGroupById(BigInteger groupId,GroupBO group){
+    public BigInteger updateSeminarGroupById(BigInteger groupId,FixGroup group){
         BigInteger bi=null;
         //修改此group
         return bi;
@@ -208,7 +206,7 @@ public class SeminarServiceImpl implements SeminarService{
 	 * @return Boolean 自动分组成功返回true，否则返回false
 	 */
 
-    public boolean automaticallyGrouping(BigInteger seminarId,BigInteger classId)
+    public void automaticallyGrouping(BigInteger seminarId,BigInteger classId)
     {
     	Boolean groupingState=Boolean.valueOf(false);
     	return groupingState;

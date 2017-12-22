@@ -2,11 +2,9 @@ package coursemanagesystem.service.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+/*import java.util.HashMap;
+import java.util.Iterator;*/
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import coursemanagesystem.entity.ClassInfo;
 import coursemanagesystem.service.ClassService;
@@ -23,7 +21,9 @@ public class ClassServiceImpl implements ClassService {
      * @param classId 班级Id
      * @return true/false 是否成功删除
 	 */
-	public Boolean deleteClassSelectionByClassId(BigInteger classId);
+	public void deleteClassSelectionByClassId(BigInteger classId){
+		return false;
+	}
 	/**
 	 * 按课程名称和教师名称获取班级列表.
 	 * <p>根据课程名和教师名获取课程ID，通过课程ID获取班级列表;若课程名和班级名均不为空，取交集<br>
@@ -35,7 +35,10 @@ public class ClassServiceImpl implements ClassService {
 	 * @see ClassServiceImpl #listClassByTeacherName(String teacherName)
 	 */
 
-	List<ClassInfo> listClassByName(String courseName, String teacherName);
+	public List<ClassInfo> listClassByName(String courseName, String teacherName){
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
+		return list;
+	}
 	
 	/**
 	 * 按课程名称获取班级列表.
@@ -47,9 +50,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @see ClassServiceImpl #listClassByCourseId(BigInteger courseId)
 	 */
 
-	public List<ClassBO> listClassByCourseName(String courseName)
+	public List<ClassInfo> listClassByCourseName(String courseName)
 	{
-		List<ClassBO> list=new ArrayList<ClassBO>();
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
 		return list;
 	}
 	
@@ -63,9 +66,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @see ClassServiceImpl #listClassByCourseId(BigInteger courseId)
 	 */
 
-	public List<ClassBO> listClassByTeacherName(String teacherName)
+	public List<ClassInfo> listClassByTeacherName(String teacherName)
 	{
-		List<ClassBO> list=new ArrayList<ClassBO>();
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
 		return list;
 	}
 	
@@ -77,9 +80,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @see CourseService #listCourseByUserId(BigInteger userId)
 	 */
 
-	public List<ClassBO> listClassByUserId(BigInteger userId)
+	public List<ClassInfo> listClassByUserId(BigInteger userId)
 	{
-		List<ClassBO> list=new ArrayList<ClassBO>();
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
 		return list;
 	}
 	
@@ -90,9 +93,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @return list 班级列表
 	 */
 
-	public List<ClassBO> listClassByCourseId(BigInteger courseId)
+	public List<ClassInfo> listClassByCourseId(BigInteger courseId)
 	{
-		List<ClassBO> list=new ArrayList<ClassBO>();
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
 		return list;
 	}
 	
@@ -104,9 +107,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @return ClassBO 班级
 	 */
 
-	public ClassBO getClassByClassId(BigInteger classId)
+	public ClassInfo getClassByClassId(BigInteger classId)
 	{
-		ClassBO classBo=new ClassBO();
+		ClassInfo classBo=new ClassInfo();
 		return classBo;
 	}
 	
@@ -119,9 +122,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @see ScoreRuleService #updateScoreRuleById(BigInteger scoreRuleId)
 	 */
 
-	public boolean updateClassByClassId(BigInteger classId)
+	public void updateClassByClassId(BigInteger classId)
 	{
-		return true;
+		return false;
 	}
 	
 	/**
@@ -136,9 +139,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @see SeminarGroupService #deleteSeminarGroupByClaaId(BigInteger classId)
 	 */
 
-	public boolean deleteClassByClassId(BigInteger classId)
+	public void deleteClassByClassId(BigInteger classId)
 	{
-		boolean isDeleted=true;
+		boolean isDeleted=false;
 		return isDeleted;
 	}
 	
@@ -166,7 +169,7 @@ public class ClassServiceImpl implements ClassService {
 	 * @return boolean 取消班级是否成功
 	 */
 
-	public Boolean deleteCourseSelectionById(BigInteger userId,BigInteger classId)
+	public void deleteCourseSelectionById(BigInteger userId,BigInteger classId)
 	{
 		boolean isDeleted=true;
 		return isDeleted;
@@ -181,9 +184,9 @@ public class ClassServiceImpl implements ClassService {
 	 * @see SeminarGroupService #listSeminarGroupBySeminarId(BigInteger seminarId)
 	 */
 
-	public ClassBO getCallGroupStatusById(BigInteger seminarId)
+	public ClassInfo getCallGroupStatusById(BigInteger seminarId)
 	{
-		ClassBO classBO=new ClassBO();
+		ClassInfo classBO=new ClassInfo();
 		return classBO;
 	}
 	
@@ -197,10 +200,10 @@ public class ClassServiceImpl implements ClassService {
 	 * @see ClassServiceImpl #insertCourseSelectionById(BigInteger userId,BigInteger classId)
 	 */
 
-	public ClassBO insertClassById(BigInteger userId,BigInteger courseId)
+	public BigInteger insertClassById(BigInteger userId,BigInteger courseId)
 	{
-		ClassBO classBO=new ClassBO();
-		return classBO;
+		ClassInfo classBO=new ClassInfo();
+		return classBO.getId();
 	}
 	
 	/**
@@ -215,14 +218,14 @@ public class ClassServiceImpl implements ClassService {
 	 *@return true删除成功 false删除失败
 	 */
 
-	public boolean deleteClassByCourseId(BigInteger courseId) {
+	public void deleteClassByCourseId(BigInteger courseId) {
 			
 		//删除自己
 		return true;
 	}
 
 	@Override
-	public Boolean deleteScoreRuleById(BigInteger classId) {
+	public void deleteScoreRuleById(BigInteger classId) {
 		return null;
 	}
 
@@ -237,7 +240,7 @@ public class ClassServiceImpl implements ClassService {
 	}
 
 	@Override
-	public Boolean updateScoreRule(BigInteger classId, ClassInfo proportions) {
+	public void updateScoreRule(BigInteger classId, ClassInfo proportions) {
 		return null;
 	}
 

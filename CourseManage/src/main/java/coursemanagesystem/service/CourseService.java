@@ -5,9 +5,6 @@ import java.util.List;
 
 import coursemanagesystem.entity.ClassInfo;
 import coursemanagesystem.entity.Course;
-import coursemanagesystem.exception.CourseNotFoundException;
-import coursemanagesystem.exception.InfoIllegalException;
-import coursemanagesystem.exception.UserNotFoundException;
 
 public interface CourseService {
 	/**
@@ -51,7 +48,7 @@ public interface CourseService {
 	 * @param course 课程信息
 	 * @return true修改成功  false修改失败
 	 */
-	Boolean updateCourseByCourseId(BigInteger courseId,Course course);
+	void updateCourseByCourseId(BigInteger courseId,Course course);
 
 
 	/**
@@ -65,7 +62,7 @@ public interface CourseService {
 	 * @exception InfoIllegalException courseId格式错误时抛出
 	 * @exception CourseNotFoundException 未找到课程
 	 */
-	Boolean deleteCourseByCourseId(BigInteger courseId) throws InfoIllegalException,CourseNotFoundException;
+	void deleteCourseByCourseId(BigInteger courseId) throws InfoIllegalException,CourseNotFoundException;
 
 
 
@@ -124,7 +121,7 @@ public interface CourseService {
 	 * @exception ClassNotFoundException 未找到班级
 	 */
 	List<ClassInfo> listClassByUserId(BigInteger userId)
-			throws InfoIllegalException,CourseNotFoundException,
+			throws InfoIllegalException,
 			ClassNotFoundException;
 	
 }

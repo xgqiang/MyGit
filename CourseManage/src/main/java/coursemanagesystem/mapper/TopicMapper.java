@@ -1,17 +1,17 @@
 package coursemanagesystem.mapper;
 
-import course.bo.TopicBO;
+import coursemanagesystem.entity.Topic;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public interface TopicMapper {
-    TopicBO getTopicByTopicId(BigInteger topicId);
-    boolean updateTopicByTopicId(BigInteger topicId, TopicBO topic);
-    boolean deleteTopicByTopicId(BigInteger topicId, BigInteger seminarId);
-    List<TopicBO> listTopicBySeminarId(BigInteger seminarId);
-    BigInteger insertTopicBySeminarId(BigInteger seminarId, TopicBO topic);
-    boolean deleteTopicById(BigInteger groupId, BigInteger topicId);
-    boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId);
-    boolean deleteTopicBySeminarId(BigInteger seminarId);
+    Topic getTopicByTopicId(BigInteger topicId);
+    void updateTopicByTopicId(BigInteger topicId, Topic topic);
+    void deleteTopicByTopicId(BigInteger topicId, BigInteger seminarId);
+    List<Topic> listTopicBySeminarId(BigInteger seminarId);
+    BigInteger insertTopicBySeminarId(BigInteger seminarId, Topic topic);
+    void deleteTopicById(BigInteger groupId, BigInteger topicId);
+    void deleteSeminarGroupTopicByTopicId(BigInteger topicId);
+    void deleteTopicBySeminarId(BigInteger seminarId);
 }

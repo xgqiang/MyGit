@@ -1,25 +1,25 @@
 package coursemanagesystem.mapper;
 
-import course.bo.GroupBO;
-import course.bo.SeminarBO;
+import coursemanagesystem.entity.FixGroup;
+import coursemanagesystem.entity.Seminar;
 
 import java.math.BigInteger;
 import java.util.List;
 
 public interface SeminarMapper {
-    List<SeminarBO> listSeminarByCourseId(BigInteger courseId);
-    boolean deleteSeminarByCourseId(BigInteger courseId);
-    SeminarBO getMySeminarBySeminarId(BigInteger seminarId, BigInteger userId);
-    SeminarBO getSeminarDetailBySeminarId(BigInteger seminarId, BigInteger userId);
-    SeminarBO getSeminarBySeminarId(BigInteger seminarId);
-    boolean updateSeminarBySeminarId(BigInteger seminarId, SeminarBO seminar);
-    boolean deleteSeminarBySeminarId(BigInteger seminarId);
-    BigInteger insertSeminarByCourseId(BigInteger courseId, SeminarBO seminarBO);
-    List<GroupBO> listGroupBySeminarId(BigInteger seminarId);
-    List<GroupBO> listGroupByTopicId(BigInteger topicId);
-    GroupBO getSeminarGroupById(BigInteger seminarId, BigInteger userId);
-    BigInteger updateSeminarGroupById(BigInteger groupId, GroupBO group);
-    boolean automaticallyGrouping(BigInteger seminarId, BigInteger classId);
+    List<Seminar> listSeminarByCourseId(BigInteger courseId);
+    void deleteSeminarByCourseId(BigInteger courseId);
+    Seminar getMySeminarBySeminarId(BigInteger seminarId, BigInteger userId);
+    Seminar getSeminarDetailBySeminarId(BigInteger seminarId, BigInteger userId);
+    Seminar getSeminarBySeminarId(BigInteger seminarId);
+    void updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar);
+    void deleteSeminarBySeminarId(BigInteger seminarId);
+    BigInteger insertSeminarByCourseId(BigInteger courseId, Seminar seminarBO);
+    List<FixGroup> listGroupBySeminarId(BigInteger seminarId);
+    List<FixGroup> listGroupByTopicId(BigInteger topicId);
+    FixGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId);
+    BigInteger updateSeminarGroupById(BigInteger groupId, FixGroup group);
+    void automaticallyGrouping(BigInteger seminarId, BigInteger classId);
     BigInteger insertStudnetIntoGroup(BigInteger userId, BigInteger groupId);
     String insertTopicByGroupId(BigInteger groupId, BigInteger topicId);
 }

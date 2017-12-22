@@ -3,7 +3,9 @@ package coursemanagesystem.view;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import coursemanagesystem.entity.User;
 import coursemanagesystem.service.LoginService;
+import coursemanagesystem.service.impl.LoginServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,17 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
-
-
-
 @Controller
 @RequestMapping("/")
 public class LoginController {
-	@Autowired
-	LoginService loginservice=new LoginService();
-	@Autowired
-	ErrorService errorservice=new ErrorService();
+	/*@Autowired
+	LoginServiceImpl loginservice=new LoginServiceImpl();
 	@RequestMapping(value="/home",method=GET)
 	public String login() {
 		return "home";
@@ -50,7 +46,7 @@ public class LoginController {
 		user.setType(type);
 		user.setPassword(password);
 		loginservice.saveUser(user);
-		return "home";s
+		return "home";
 	}
 	
 	@RequestMapping(value="/signin",method=POST)
@@ -89,5 +85,5 @@ public class LoginController {
 		courseService.saveSelectCourse(Integer.valueOf(courseId));
 		model.addAttribute("CourseList", courseService.getAllSelectCourses());
 		return "/student/course";
-	}
+	}*/
 }

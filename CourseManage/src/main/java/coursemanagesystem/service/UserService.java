@@ -7,11 +7,11 @@ import coursemanagesystem.entity.Attendance;
 import coursemanagesystem.entity.Course;
 import coursemanagesystem.entity.User;
 import coursemanagesystem.exception.ClassesNotFoundException;
-import coursemanagesystem.exception.InfoIllegalException;
 import coursemanagesystem.exception.SeminarNotFoundException;
 import coursemanagesystem.exception.UserNotFoundException;
 
 public interface UserService {
+
 	/**
 	 * 添加学生签到信息.
 	 * <p>根据班级id，讨论课id，学生id，经度，纬度进行签到，在方法中通过班级id，讨论课id获取当堂课发起签到的位置<br>
@@ -26,7 +26,7 @@ public interface UserService {
 	 * @exception ClassesNotFoundException 未找到班级
 	 * @exception SeminarNotFoundException 未找到讨论课
 	 */
-	Boolean insertAttendanceById(BigInteger classId, BigInteger seminarId,
+	void insertAttendanceById(BigInteger classId, BigInteger seminarId,
 								 BigInteger userId, double longitude, double latitude) throws
 			InfoIllegalException,ClassesNotFoundException,SeminarNotFoundException;
 
@@ -63,11 +63,10 @@ public interface UserService {
 	 * @return true 解绑成功 false 解绑失败
 	 * @see CourseService#listCourseByUserId(BigInteger userId)
 	 * @see CourseService#deleteCourseByCourseId(BigInteger courseId)
-	 * @exception InfoIllegalException 信息不合法，id格式错误
+	// * @exception InfoIllegalException 信息不合法，id格式错误
 	 * @exception UserNotFoundException 未找到对应用户
 	 */
-	boolean deleteTeacherAccount(BigInteger userId) throws InfoIllegalException,
-			UserNotFoundException;
+	void deleteTeacherAccount(BigInteger userId) throws UserNotFoundException;
 
 
 	/**
@@ -77,10 +76,10 @@ public interface UserService {
 	 * @param userId 用户id
 	 * @return true 解绑成功 false 解绑失败
 	 * @see ClassService#deleteCourseSelectionById(BigInteger userId,BigInteger classId)
-	 * @exception InfoIllegalException 信息不合法，id格式错误
+	// * @exception InfoIllegalException 信息不合法，id格式错误
 	 * @exception UserNotFoundException 未找到对应用户
 	 */
-	Boolean deleteStudentAccount(BigInteger userId) throws InfoIllegalException,
+	void deleteStudentAccount(BigInteger userId) throws
 			UserNotFoundException;
 
 
@@ -91,10 +90,10 @@ public interface UserService {
 	 * @param userId 用户Id
 	 * @return user 用户信息
 	 * @see SchoolService#getSchoolBySchoolId(BigInteger schoolId)
-	 * @exception InfoIllegalException throws when 信息不合法，id格式错误
+	 //* @exception InfoIllegalException throws when 信息不合法，id格式错误
 	 * @exception UserNotFoundException throws when 未找到对应用户
 	 */
-	User getUserByUserId(BigInteger userId) throws InfoIllegalException,
+	User getUserByUserId(BigInteger userId) throws
 			UserNotFoundException;
 
 	/**
@@ -103,11 +102,10 @@ public interface UserService {
 	 * @author qinlingyun
 	 * @param userName 用户名
 	 * @return userId 用户ID
-	 * @exception InfoIllegalException throws when 信息不合法，id格式错误
+	// * @exception InfoIllegalException throws when 信息不合法，id格式错误
 	 * @exception UserNotFoundException throws when 未找到对应用户
 	 */
-	List<BigInteger> listUserIdByUserName(String userName)throws
-			InfoIllegalException,UserNotFoundException;;
+	List<BigInteger> listUserIdByUserName(String userName)throws UserNotFoundException;;
 
 	/**
 	 * 根据用户ID修改用户信息.
@@ -118,7 +116,7 @@ public interface UserService {
 	 * @return list 用户id列表
 	 * @exception UserNotFoundException throws when 未找到对应用户
 	 */
-	Boolean updateUserByUserId(BigInteger userId, User user) throws
+	void updateUserByUserId(BigInteger userId, User user) throws
 			UserNotFoundException;
 
 
@@ -130,11 +128,11 @@ public interface UserService {
 	 * @param numBeginWith 学号开头
 	 * @param nameBeginWith 姓名开头
 	 * @return list 用户列表
-	 * @exception InfoIllegalException throws when 信息不合法
+	 //* @exception InfoIllegalException throws when 信息不合法
 	 * @exception ClassesNotFoundException throws when 未找到对应班级
 	 */
 	List<User> listUserByClassId(BigInteger classId,String numBeginWith,
-								 String nameBeginWith) throws InfoIllegalException,
+								 String nameBeginWith) throws
 			ClassesNotFoundException;
 
 
@@ -158,10 +156,9 @@ public interface UserService {
 	 * @return list 处于出勤状态的学生的列表
 	 * @see UserService #listAttendanceById(BigInteger, BigInteger)
 	 * @see UserService #getUserByUserId(BigInteger)
-	 * @exception InfoIllegalException throws when 信息不合法，id格式错误
+	 //* @exception InfoIllegalException throws when 信息不合法，id格式错误
 	 */
-	List<User> listPresentStudent(BigInteger seminarId, BigInteger classId)
-			throws InfoIllegalException;
+	List<User> listPresentStudent(BigInteger seminarId, BigInteger classId);
 
 
 	/**
@@ -172,10 +169,9 @@ public interface UserService {
 	 * @return list 处于缺勤状态的学生列表
 	 * @see UserService #listUserByClassId(BigInteger, String, String)
 	 * @see UserService #listPresentStudent(BigInteger, BigInteger)
-	 * @exception InfoIllegalException throws when 信息不合法，id格式错误
+	// * @exception InfoIllegalException throws when 信息不合法，id格式错误
 	 */
-	List<User> listAbsenceStudent(BigInteger seminarId,BigInteger classId) throws
-			InfoIllegalException;
+	List<User> listAbsenceStudent(BigInteger seminarId,BigInteger classId);
 
 	/**
 	 * 根据教师名称列出课程名称.

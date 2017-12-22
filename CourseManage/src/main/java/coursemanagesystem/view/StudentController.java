@@ -7,14 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import course.service.ClassService;
-import course.service.CourseService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-	@Autowired
+	/*@Autowired
 	CourseService courseService = new CourseService();
 	@Autowired
 	ClassService classService = new ClassService();
@@ -42,6 +40,6 @@ public class StudentController {
 	public String chooseCourse(Model model) {
 		model.addAttribute("CourseList", courseService.getAllSelectCourses());
 		return "/student/course";
-	}
+	}*/
 	
 }

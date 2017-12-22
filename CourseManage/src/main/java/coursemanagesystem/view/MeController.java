@@ -3,21 +3,18 @@ package coursemanagesystem.view;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import course.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import course.entity.User;
-import course.service.LoginService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/me")
 public class MeController {
-	@Autowired
+	/*@Autowired
 	LoginService loginService=new LoginService();
 	@Autowired
 	UserServiceImpl userService=new UserServiceImpl();
@@ -55,5 +52,5 @@ public class MeController {
 		User.setType(type);
 		model.addAttribute("User",loginService.getNowUser());
 		return "redirect:/me?type="+type;
-	}
+	}*/
 }

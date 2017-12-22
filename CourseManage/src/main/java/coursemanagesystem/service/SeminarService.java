@@ -4,8 +4,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 import coursemanagesystem.entity.Seminar;
-import coursemanagesystem.exception.CourseNotFoundException;
-import coursemanagesystem.exception.InfoIllegalException;
 import coursemanagesystem.exception.SeminarNotFoundException;
 
 public interface SeminarService {
@@ -33,7 +31,7 @@ public interface SeminarService {
 	 * @exception InfoIllegalException CourseId 格式错误时抛出
 	 * @exception CourseNotFoundException 该课程不存在时抛出
 	 */
-	Boolean deleteSeminarByCourseId(BigInteger courseId) throws InfoIllegalException,
+	void deleteSeminarByCourseId(BigInteger courseId) throws InfoIllegalException,
 			CourseNotFoundException;
 
 
@@ -89,7 +87,7 @@ public interface SeminarService {
 	 * @exception InfoIllegalException SeminarId 格式错误时抛出
 	 * @exception SeminarNotFoundException 该讨论课不存在时抛出
 	 */
-	Boolean updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar) throws
+	void updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar) throws
 			InfoIllegalException,SeminarNotFoundException;
 
 
@@ -104,7 +102,7 @@ public interface SeminarService {
 	 * @exception InfoIllegalException SeminarId 格式错误时抛出
 	 * @exception SeminarNotFoundException 该讨论课不存在时抛出
 	 */
-	Boolean deleteSeminarBySeminarId(BigInteger seminarId) throws
+	void deleteSeminarBySeminarId(BigInteger seminarId) throws
 			InfoIllegalException,SeminarNotFoundException;
 
 

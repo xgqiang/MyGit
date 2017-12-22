@@ -4,13 +4,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import coursemanagesystem.entity.School;
+import coursemanagesystem.service.SchoolService;
 import org.springframework.stereotype.Service;
 
-import course.bo.SchoolBO;
-import course.service.SchoolService;
 
 @Service
-public class SchoolServiceImpl implements SchoolService{
+public class SchoolServiceImpl implements SchoolService {
 	/**
 	 * 按城市名称查学校.
 	 * <p>根据城市名称，查询出在该城市的所有学校<br>
@@ -19,9 +19,9 @@ public class SchoolServiceImpl implements SchoolService{
 	 * @return list 学校列表
 	 */
 
-	public List<SchoolBO> listSchoolByCity(String city)
+	public List<School> listSchoolByCity(String city)
 	{
-		List<SchoolBO> list = new ArrayList<SchoolBO>();		
+		List<School> list = new ArrayList<School>();
 		return  list;
 	}
 	
@@ -33,7 +33,7 @@ public class SchoolServiceImpl implements SchoolService{
 	 * @return true（添加学校成功）/false（添加学校未成功）
 	 */
 
-	public boolean insertSchool(SchoolBO school)
+	public void insertSchool(School school)
 	{
 		if(true)
 		{
@@ -80,9 +80,9 @@ public class SchoolServiceImpl implements SchoolService{
 	 * @return SchoolBO 学校信息
 	 */
 
-	public SchoolBO getSchoolBySchoolId(BigInteger SchoolId)
+	public School getSchoolBySchoolId(BigInteger SchoolId)
 	{
-		SchoolBO school = new SchoolBO();
+		School school = new School();
 		return school;
 	}
 }

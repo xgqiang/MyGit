@@ -1,4 +1,4 @@
 package coursemanagesystem.exception;
 
-public class UserNotFoundException extends Exception{
+public class UserNotFoundException {
 }

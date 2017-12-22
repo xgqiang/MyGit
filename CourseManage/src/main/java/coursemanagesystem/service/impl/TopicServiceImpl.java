@@ -4,15 +4,14 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import course.service.impl.SeminarGroupServiceImpl;
+import coursemanagesystem.entity.SeminarGroup;
+import coursemanagesystem.entity.Topic;
+import coursemanagesystem.service.TopicService;
 import org.springframework.stereotype.Service;
 
-import course.bo.SeminarGroupBO;
-import course.bo.TopicBO;
-import course.service.TopicService;
 
 @Service
-public class TopicServiceImpl implements TopicService{
+public class TopicServiceImpl implements TopicService {
 	/**
 	 * 按topicId获取topic.
 	 * <p>按topicId获取topic<br>
@@ -21,8 +20,8 @@ public class TopicServiceImpl implements TopicService{
 	 * @return 该topic
 	 */
 
-	public TopicBO getTopicByTopicId(BigInteger topicId){
-        TopicBO topic = null;
+	public Topic getTopicByTopicId(BigInteger topicId){
+		Topic topic = null;
         //topic=TopicDao.getTopicByTopicId(BigInteger topicId);
         return topic;
     }
@@ -36,7 +35,7 @@ public class TopicServiceImpl implements TopicService{
      * @return 是否修改成功
      */
 
-	public boolean updateTopicByTopicId(BigInteger topicId,TopicBO topic){
+	public void updateTopicByTopicId(BigInteger topicId,Topic topic){
         //更改讨论课信息
         return true; 
     }
@@ -49,13 +48,13 @@ public class TopicServiceImpl implements TopicService{
      * @return 是否成功
      */
 
-	public boolean deleteTopicByTopicId(BigInteger topicId,BigInteger seminarId){
+	public void deleteTopicByTopicId(BigInteger topicId,BigInteger seminarId){
         //删除topic还要把每个选了这个topic的小组的选题属性修改为null
         //想找到选了这个topic的小组，首先通过seminarId获得该讨论课所有小组，遍历判断是否选了这个topic
     	SeminarGroupServiceImpl sg=new SeminarGroupServiceImpl();
         //GroupService gs=new GroupService();
-        List<SeminarGroupBO> groups=sg.listSeminarGroupBySeminarId(seminarId);
-        List<SeminarGroupBO> topic_group=new ArrayList<SeminarGroupBO>();
+        List<SeminarGroup> groups=sg.listSeminarGroupBySeminarId(seminarId);
+        List<SeminarGroup> topic_group=new ArrayList<SeminarGroup>();
         //for g in groups
             //if(选了此topic) topic_group.add(g);
         //修改topic_group的选题属性
@@ -74,7 +73,7 @@ public class TopicServiceImpl implements TopicService{
      * @return null
 	 */
 
-	public List<TopicBO> listTopicBySeminarId(BigInteger seminarId) {
+	public List<Topic> listTopicBySeminarId(BigInteger seminarId) {
 			
 		return null;
 	};
@@ -88,7 +87,7 @@ public class TopicServiceImpl implements TopicService{
 	 * @return 新建话题后给topic分配的Id
 	 */
 
-	public BigInteger insertTopicBySeminarId(BigInteger seminarId,TopicBO topic){
+	public BigInteger insertTopicBySeminarId(BigInteger seminarId,Topic topic){
 	    BigInteger bi=null;
 	    return bi;
 	}
@@ -103,7 +102,7 @@ public class TopicServiceImpl implements TopicService{
 	 * @return true删除成功 false删除失败
 	 */
 
-	public boolean deleteTopicById(BigInteger groupId,BigInteger topicId)  {
+	public void deleteTopicById(BigInteger groupId,BigInteger topicId)  {
 		
 		//删除自己
 		return true;
@@ -116,7 +115,7 @@ public class TopicServiceImpl implements TopicService{
 	 * @return true删除成功 false删除失败
 	 */
 
-	public boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId) {
+	public void deleteSeminarGroupTopicByTopicId(BigInteger topicId) {
 		
 		
 		//删除自己
@@ -131,11 +130,11 @@ public class TopicServiceImpl implements TopicService{
      * @param seminarId 讨论课Id
 	 *@see TopicServiceImpl #listTopicBySeminarId(BigInteger seminarId)
 	 *@see TopicServiceImpl #deleteSeminarGroupTopicByTopicId(BigInteger topicId)
-	 *@see GradeService   #deleteStudentScoreGroupByTopicId(BigInteger topicId)
+	 *@see GradeServiceImpl   #deleteStudentScoreGroupByTopicId(BigInteger topicId)
 	 * @return true删除成功 false删除失败
 	 */
 
-	public boolean deleteTopicBySeminarId(BigInteger seminarId) {
+	public void deleteTopicBySeminarId(BigInteger seminarId) {
 		
 		
 		//删除自己

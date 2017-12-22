@@ -13,21 +13,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import course.entity.Course;
-import course.entity.ErrorMessage;
-import course.entity.Proportion;
-import course.service.CourseService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/course")
 public class CourseController {
 	
-	@Autowired
+	/*@Autowired
 	CourseService courseService = new CourseService();
 	Random rand = new Random(34);
 	
-	/*@RequestMapping(value="/teacher/course/manage",method=GET)
+	@RequestMapping(value="/teacher/course/manage",method=GET)
 	public String get_teacher_course_message() {
 		return "/teacher/course/manage";
 	}
@@ -62,7 +58,7 @@ public class CourseController {
 	@RequestMapping(value="/student/course/seminar1",method=GET)
 	public String seminar_message() {
 		return "/student/course/seminar/message";
-	}*/
+	}
 	@RequestMapping(value="/select/{courseId}",method=GET)
 	public String student_select_course(@PathVariable String courseId,Model model) {
 		courseService.saveSelectCourse(Integer.valueOf(courseId));
@@ -160,5 +156,5 @@ public class CourseController {
 		course.getProportions().setB(Integer.valueOf(c));
 		//courseService.saveCourse(course);
 		return "/course?type=teacher";
-	}
+	}*/
 }

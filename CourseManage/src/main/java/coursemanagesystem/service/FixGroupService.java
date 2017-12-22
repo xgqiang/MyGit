@@ -7,9 +7,7 @@ import coursemanagesystem.entity.FixGroup;
 import coursemanagesystem.entity.SeminarGroup;
 import coursemanagesystem.entity.User;
 import coursemanagesystem.exception.FixGroupNotFoundException;
-import coursemanagesystem.exception.InfoIllegalException;
 import coursemanagesystem.exception.InvalidOperationException;
-import coursemanagesystem.exception.UserNotFoundException;
 
 public interface FixGroupService {
 	/**
@@ -20,7 +18,7 @@ public interface FixGroupService {
 	 * @exception InfoIllegalException 信息不合法，id格式错误
 	 * @exception FixGroupNotFoundException 未找到小组
 	 */
-	Boolean deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId) throws
+	void deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId) throws
 			InfoIllegalException,FixGroupNotFoundException;
 
 	/**
@@ -69,7 +67,7 @@ public interface FixGroupService {
 	 * @exception InfoIllegalException 信息不合法，id格式错误
 	 * @exception ClassNotFoundException 未找到班级
 	 */
-	Boolean deleteFixGroupByClassId(BigInteger classId) throws InfoIllegalException,
+	void deleteFixGroupByClassId(BigInteger classId) throws InfoIllegalException,
 			ClassNotFoundException;
 
 	/**
@@ -82,7 +80,7 @@ public interface FixGroupService {
 	 * @exception InfoIllegalException  信息不合法，id格式错误
 	 * @exception FixGroupNotFoundException 未找到小组
 	 */
-	Boolean deleteFixGroupByGroupId(BigInteger groupId) throws InfoIllegalException,
+	void deleteFixGroupByGroupId(BigInteger groupId) throws InfoIllegalException,
 			FixGroupNotFoundException;
 
 	/**
@@ -95,7 +93,7 @@ public interface FixGroupService {
 	 * @exception InfoIllegalException 信息不合法，id格式错误
 	 * @exception FixGroupNotFoundException 未找到小组
 	 */
-	Boolean updateFixGroupByGroupId(BigInteger groupId,FixGroup fixGroupBO) throws
+	void updateFixGroupByGroupId(BigInteger groupId,FixGroup fixGroupBO) throws
 			InfoIllegalException,FixGroupNotFoundException;
 
 	/**
@@ -137,7 +135,7 @@ public interface FixGroupService {
 	 * @exception InfoIllegalException  信息不合法，id格式错误
 	 * @exception FixGroupNotFoundException 未找到小组
 	 */
-	Boolean deleteTopicByGroupId(BigInteger groupId) throws InfoIllegalException,
+	void deleteTopicByGroupId(BigInteger groupId) throws InfoIllegalException,
 			FixGroupNotFoundException;
 
 	/**
@@ -165,6 +163,6 @@ public interface FixGroupService {
 	 * @exception InfoIllegalException  信息不合法，id格式错误
 	 * @exception FixGroupNotFoundException 未找到小组
 	 */
-	Boolean updateSeminarGroupById(BigInteger groupId,SeminarGroup group) throws
+	void updateSeminarGroupById(BigInteger groupId,SeminarGroup group) throws
 			InfoIllegalException,FixGroupNotFoundException;
 }

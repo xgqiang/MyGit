@@ -11,9 +11,7 @@ public interface TimerService {
      * @author qinlingyun
      */
     @Scheduled(fixedRate = 5000)
-    public void countPresentationGrade(){
-
-    }
+    void countPresentationGrade();
 
     /**
      * 课前将固定小组复制一份作为讨论课小组名单.
@@ -21,8 +19,5 @@ public interface TimerService {
      * @author qinlingyun
      */
     @Scheduled(fixedRate = 5000)
-    public void fixedGroupToSeminarGroup(){
-
-        return;
-    }
+    void fixedGroupToSeminarGroup();
 }

@@ -4,12 +4,12 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import coursemanagesystem.service.GradeService;
 import org.springframework.stereotype.Service;
 
-import course.service.GradeService;
 
 @Service
-public class GradeServiceImpl implements GradeService{
+public class GradeServiceImpl implements GradeService {
 	/**
 	 * 按topicId删除学生打分表.
 	 * @author zhouzhongjun
@@ -17,7 +17,7 @@ public class GradeServiceImpl implements GradeService{
      *  @return true删除成功  false删除失败
 	 */
 
-	public boolean deleteStudentScoreGroupByTopicId(BigInteger topicId) {
+	public void deleteStudentScoreGroupByTopicId(BigInteger topicId) {
 		
 		//删除自己
 		return true;
@@ -29,7 +29,7 @@ public class GradeServiceImpl implements GradeService{
 	 * @param userId 学生id
 	 * @param seminarGroupId 讨论课小组id
 	 * @return list 讨论课分数列表
-	 * @see SeminarGroupService#listSeminarGroupIdByStudentId(BigInteger userId)
+	 * @see SeminarGroupServiceImpl#listSeminarGroupIdByStudentId(BigInteger userId)
 	 */
 
 	public List<BigInteger> listSeminarGradeBySeminarGroupId(BigInteger userId, BigInteger seminarGroupId)
@@ -50,7 +50,7 @@ public class GradeServiceImpl implements GradeService{
 	 * @return true 提交成功 false 提交失败
 	 */
 
-	public boolean insertGroupGradeByUserId(BigInteger userId,BigInteger seminarId,BigInteger groupId,BigInteger grade) {
+	public void insertGroupGradeByUserId(BigInteger userId,BigInteger seminarId,BigInteger groupId,BigInteger grade) {
 	    
 	    //插入打分表
 	    return true;
@@ -65,7 +65,7 @@ public class GradeServiceImpl implements GradeService{
 	 * @return Boolean true 操作成功 false 操作失败
 	 */
 
-	public boolean updateGroupByGroupId(BigInteger seminar_group_id, BigInteger grade) {
+	public void updateGroupByGroupId(BigInteger seminar_group_id, BigInteger grade) {
 		//GradeDAO.updateGroupByGroupId(BigInteger seminar_group_id, BigInteger grade)
 		return true;
 	}
@@ -75,7 +75,7 @@ public class GradeServiceImpl implements GradeService{
 	 * @author qinlingyun
 	 * @param userId 用户id
 	 * @return list 讨论课成绩列表
-	 * @see SeminarGroupService#listSeminarGroupBySeminarId(BigInteger seminarId)
+	 * @see SeminarGroupServiceImpl#listSeminarGroupBySeminarId(BigInteger seminarId)
 	 */
 
 	public List<BigInteger> listSeminarGradeByStudentId(BigInteger userId) {

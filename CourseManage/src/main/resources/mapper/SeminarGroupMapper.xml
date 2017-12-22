@@ -1,1 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="coursemanagesystem.mapper.SeminarGroupMapper">
+    <resultMap id="UserResultMap" type="User">
+        <id column="id" property="id" />
+        <result column="phone" property="phone" />
+        <result column="wechat_id" property="wechatId" />
+        <result column="openid" property="openid" />
+        <result column="avatar" property="avatar" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+        <result column="school_id" property="school.id" />
+        <result column="gender" property="gender" />
+        <result column="type" property="type" />
+        <result column="number" property="number" />
+        <result column="education" property="education" />
+        <result column="title" property="title" />
+        <result column="email" property="email" />
+    </resultMap>
+    <resultMap id="SeminarGroupResultMap" type="SeminarGroup">
+        <id column="id" property="id" />
+        <result column="seminar_id" property="seminar.id" />
+        <result column="report_grade" property="reportGrade" />
+        <result column="presentation_grade" property="presentationGrade" />
+        <result column="final_grade" property="finalGrade" />
+        <result column="report" property="report" />
+        <result column="class_id" property="classInfo.id" />
+        <result column="leader_id" property="leader.id" />
+    </resultMap>
+    <delete id="deleteSeminarGroupMemberBySeminarGroupId">
+        delete from seminar_group_member
+        where seminar_group_id=#{seminarGroupId}
+    </delete>
+
+    <insert id="insertSeminarGroupMemberById">
+        insert into seminar_group_member(seminar_group_id,student_id)
+        values(#{groupId},#{userId})
+        <selectKey resultType="java.math.BigInteger" keyProperty="id" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+    </insert>
+
+    <select id="listSeminarGroupMemberByGroupId" resultMap="User">
+        select id,phone, wechat_id, openid, avatar, password, name, school_id, gender, type, number, education, title, email
+        from user_info
+        where id in
+        (select student_id
+        from seminar_group_member
+        where seminar_group_id=#{groupId})
+    </select>
+
+    <select id="listSeminarGroupIdByStudentId" resultMap="SeminarGroupResultMap">
+        select id,seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id
+        from seminar_group
+        where id in
+        (select seminar_group_id
+        from seminar_group_member
+        where student_id=#{studentId})
+    </select>
+
+    <select id="getSeminarGroupLeaderByGroupId" resultType="java.math.BigInteger">
+        select leader_id
+        from seminar_group
+        where id =#{groupId}
+    </select>
+
+    <select id="listSeminarGroupBySeminarId" resultMap="SeminarGroupResultMap">
+        select id,seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id
+        from seminar_group
+        where seminar_id =#{seminarId}
+    </select>
+
+    <delete id="deleteSeminarGroupBySeminarId">
+        delete from seminar_group
+        where seminar_id =#{seminarId}
+    </delete>
+
+    <insert id="insertSeminarGroupBySeminarId" parameterType="SeminarGroup">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroup.id">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into seminar_group(seminar_id, report_grade, presentation_grade, final_grade, report, class_id, leader_id)
+        values(#{seminarId},#{seminarGroup.report},#{seminarGroup.reportGrade},#{seminarGroup.presentationGrade},
+        #{seminarGroup.finalGrade},#{seminarGroup.report},#{seminarGroup.classInfo.id},#{seminarGroup.leader.id})
+    </insert>
+
+    <insert id="insertSeminarGroupMemberByGroupId">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroupMember.id">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into seminar_group_member(seminar_group_id, student_id)
+        values(#{groupId},#{student.id})
+    </insert>
+
+    <delete id="deleteSeminarGroupByGroupId">
+        delete from seminar_group
+        where id=#{seminarGroupId}
+    </delete>
+
+    <select id="getSeminarGroupByGroupId" resultType="SeminarGroup">
+        select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
+        from seminar_group
+        where id=#{groupId}
+    </select>
+
+    <select id="getSeminarGroupLeaderById" resultType="java.math.BigInteger">
+        select leader_id
+        from seminar_group
+        where seminar_id=#{seminarId}
+        and id in
+        (select seminar_group_id
+        from seminar_group_member
+        where student_id=#{userId})
+    </select>
+
+    <select id="automaticallyGrouping">
+        select leader_id from seminar_group WHERE id=#{seminarId}
+    </select>
+
+    <select id="getSeminarGroupById" resultType="SeminarGroup">
+        select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
+        from seminar_group
+        where seminar_id=#{seminarId}
+        and id in
+        (select seminar_group_id
+        from seminar_group_member
+        where student_id=#{userId})
+    </select>
+
+    <select id="listGroupByTopicId" resultType="SeminarGroup">
+        select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
+        from seminar_group
+        where id in
+        (select seminar_group_id
+        from seminar_group_topic
+        where topic_id=#{topicId})
+    </select>s
+
+    <insert id="insertTopicByGroupId">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="id">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into seminar_group_topic(topic_id, seminar_group_id)
+        values(#{topicId},#{groupId})
+    </insert>
+
+    <delete id="deleteTopicByGroupId">
+        delete from seminar_group_topic
+        where seminar_group_id=#{groupId}
+    </delete>
+
+
+    <update id="assignLeaderById">
+        update seminar_group
+        set leader_id=#{userId}
+        where id=#{groupId}
+        and leader_id is null
+    </update>
+
+    <update id="resignLeaderById">
+        update seminar_group
+        set leader_id=null
+        where id=#{groupId}
+    </update>
+
+</mapper>

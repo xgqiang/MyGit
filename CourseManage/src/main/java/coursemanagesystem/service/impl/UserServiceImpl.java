@@ -4,14 +4,18 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import coursemanagesystem.entity.Attendance;
+import coursemanagesystem.entity.Course;
+import coursemanagesystem.entity.User;
+import coursemanagesystem.exception.ClassesNotFoundException;
+import coursemanagesystem.exception.SeminarNotFoundException;
+import coursemanagesystem.service.CourseService;
+import coursemanagesystem.service.UserService;
 import org.springframework.stereotype.Service;
 
-import course.bo.AttendanceBO;
-import course.bo.UserBO;
-import course.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	/**
 	 * 添加学生签到信息.
 	 * <p>根据班级id，讨论课id，学生id，经度，纬度进行签到<br>*在方法中通过班级id，讨论课id获取当堂课发起签到的位置
@@ -24,7 +28,7 @@ public class UserServiceImpl implements UserService{
 	 * @return true（添加签到信息成功）/false（添加签到信息未成功）
 	 */
 
-	public boolean insertAttendanceById(BigInteger classId, BigInteger seminarId, BigInteger userId, double longitude, double latitude)
+	public void insertAttendanceById(BigInteger classId, BigInteger seminarId, BigInteger userId, double longitude, double latitude)
 	{
 		
 		if(true) 
@@ -36,7 +40,23 @@ public class UserServiceImpl implements UserService{
 			return false;
 		}
 	}
-	
+	/**
+	 * 获取学生签到信息.
+	 * <p>根据班级id，讨论课id获取当堂课签到信息<br>
+	 * @author LiuAiqi
+	 * @param classId 班级的id
+	 * @param seminarId 讨论课id
+	 * @return list 当堂课签到信息
+	 * @exception InfoIllegalException 信息不合法，id格式错误
+	 * @exception ClassesNotFoundException 未找到班级
+	 * @exception SeminarNotFoundException 未找到讨论课
+	 */
+	public List<Attendance> listAttendanceById(BigInteger classId, BigInteger seminarId)
+			throws InfoIllegalException,ClassesNotFoundException,
+			SeminarNotFoundException{
+		List<Attendance> list = new ArrayList<Attendance>();
+		return list;
+	}
 	/**
 	 * 获取学生签到信息.
 	 * <p>根据班级id，讨论课id获取当堂课签到信息
@@ -45,10 +65,10 @@ public class UserServiceImpl implements UserService{
 	 * @return list 当堂课签到信息
 	 */
 
-	public List<AttendanceBO> listAttendanceById(BigInteger classId)
+	public List<Attendance> listAttendanceById(BigInteger classId)
 	{
 		
-		List<AttendanceBO> list = new ArrayList<AttendanceBO>();		
+		List<Attendance> list = new ArrayList<Attendance>();
 		return list;
 	}
 
@@ -60,7 +80,7 @@ public class UserServiceImpl implements UserService{
 	 * @return user 该用户信息
 	 */
 
-	public UserBO signUpPhone(UserBO user) {
+	public User signUpPhone(User user) {
 		
 		return user;
 		
@@ -78,15 +98,28 @@ public class UserServiceImpl implements UserService{
 	 * @return user 该用户信息
 	 */
 
-	public UserBO signInWeChat(BigInteger userId,String code,String state,String successUrl) {
+	public User signInWeChat(BigInteger userId,String code,String state,String successUrl) {
 
-		UserBO user = new UserBO();		
+		User user = new User();
 		
 		return user;
 		
 	}
-	
-	
+
+	/**
+	 * 根据用户名获取用户ID.
+	 * <p>根据用户名获取用户ID<br>
+	 * @author qinlingyun
+	 * @param userName 用户名
+	 * @return userId 用户ID
+	 * @exception InfoIllegalException throws when 信息不合法，id格式错误
+	 * @exception UserNotFoundException throws when 未找到对应用户
+	 */
+	public List<BigInteger> listUserIdByUserName(String userName)throws
+			InfoIllegalException,UserNotFoundException{
+		List<BigInteger> list = new ArrayList<BigInteger>();
+		return list;
+	}
 	/**
 	 * 手机号登录.
 	 * <p>手机号登录 (.Net使用)<br>*User中只有phone和password，用于判断用户名密码是否正确<br>
@@ -95,7 +128,7 @@ public class UserServiceImpl implements UserService{
 	 * @return user 该用户信息
 	 */
 
-	public UserBO signInPhone(UserBO user) {
+	public User signInPhone(User user) {
 		
 		return user;
 		
@@ -108,11 +141,11 @@ public class UserServiceImpl implements UserService{
 	 * @author qinlingyun
 	 * @param userId 用户id
 	 * @return true 解绑成功 false 解绑失败
-	 * @see CourseService#listCourseByUserId(BigInteger userId)
-	 * @see CourseService#deleteCourseByCourseId(BigInteger courseId)
+	 * @see CourseServiceImpl#listCourseByUserId(BigInteger userId)
+	 * @see CourseServiceImpl#deleteCourseByCourseId(BigInteger courseId)
 	 */
 
-	public boolean deleteTeacherAccount(BigInteger userId) {
+	public void deleteTeacherAccount(BigInteger userId) {
 		
 		boolean isDeleted = true;
 		
@@ -126,10 +159,10 @@ public class UserServiceImpl implements UserService{
 	 * @author qinlingyun 
 	 * @param userId 用户id
 	 * @return true 解绑成功 false 解绑失败
-	 * @see ClassService#deleteCourseSelectionById(BigInteger userId,BigInteger classId)
+	 * @see ClassServiceImpl#deleteCourseSelectionById(BigInteger userId,BigInteger classId)
 	 */
 
-	public boolean deleteStudentAccount(BigInteger userId) {
+	public void deleteStudentAccount(BigInteger userId) {
 	
 		boolean isDeleted = true;
 		
@@ -143,12 +176,12 @@ public class UserServiceImpl implements UserService{
 	 * @author qinlingyun
 	 * @param userId 用户Id
 	 * @return user 用户信息
-	 * @see SchoolService#getSchoolBySchoolId(BigInteger schoolId)
+	 * @see SchoolServiceImpl#getSchoolBySchoolId(BigInteger schoolId)
 	 */
 
-	public UserBO getUserByUserId(BigInteger userId) {
+	public User getUserByUserId(BigInteger userId) {
 
-		UserBO user = new UserBO();
+		User user = new User();
 		
 		return user;
 		
@@ -176,7 +209,7 @@ public class UserServiceImpl implements UserService{
 	 * @return true 修改成功 false 修改失败
 	 */
 
-	public boolean updateUserByUserId(BigInteger userId, UserBO user) {
+	public void updateUserByUserId(BigInteger userId, User user) {
 		
 		boolean isDeleted = true;
 		
@@ -196,7 +229,7 @@ public class UserServiceImpl implements UserService{
 
 	public List listUserByClassId(BigInteger classId,String numBeginWith,String nameBeginWith) {
 
-		List<UserBO> list = new ArrayList<UserBO>(); 
+		List<User> list = new ArrayList<User>();
 		
 		return list;
 		
@@ -213,7 +246,7 @@ public class UserServiceImpl implements UserService{
 
 	public List listUserByUserName(String userName) {
 
-		List<UserBO> list = new ArrayList<UserBO>(); 
+		List<User> list = new ArrayList<User>();
 		
 		return list;
 		
@@ -231,7 +264,7 @@ public class UserServiceImpl implements UserService{
 
 	public List listPresentStudent(BigInteger seminarId, BigInteger classId) {
 		
-		List<UserBO> list = new ArrayList<UserBO>();		
+		List<User> list = new ArrayList<User>();
 		
 		return list;
 		
@@ -248,9 +281,22 @@ public class UserServiceImpl implements UserService{
 
 	public List listAbsenceStudent(BigInteger seminarId,BigInteger classId) {
 
-		List<UserBO> list = new ArrayList<UserBO>();
+		List<User> list = new ArrayList<User>();
 		
 		return list;
 		
+	}
+	/**
+	 * 根据教师名称列出课程名称.
+	 * <p>根据教师名称列出课程名称<br>
+	 * @author yexiaona
+	 * @param teacherName 教师名称
+	 * @return list 课程列表
+	 * @see UserService #listUserByUserName(String userName)
+	 * @see CourseService #listCourseByUserId(BigInteger userId)
+	 */
+	public List<Course> listCourseByTeacherName(String teacherName){
+		List<Course> list = new ArrayList<Course>();
+		return list;
 	}
 }

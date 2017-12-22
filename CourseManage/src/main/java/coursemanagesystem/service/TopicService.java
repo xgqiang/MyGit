@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 import coursemanagesystem.entity.Topic;
-import coursemanagesystem.exception.InfoIllegalException;
 import coursemanagesystem.exception.TopicNotFoundException;
 
 public interface TopicService {
@@ -29,7 +28,7 @@ public interface TopicService {
 	 * @exception TopicNotFoundException 无此小组或Id错误
 	 * @exception InfoIllegalException Id格式错误或topic格式错误时抛出
 	 */
-	Boolean updateTopicByTopicId(BigInteger topicId,Topic topic)throws TopicNotFoundException,InfoIllegalException;
+	void updateTopicByTopicId(BigInteger topicId,Topic topic)throws TopicNotFoundException,InfoIllegalException;
 
 	/**
 	 * 删除topic.
@@ -39,7 +38,7 @@ public interface TopicService {
 	 * @return 是否成功
 	 * @exception InfoIllegalException Id格式错误时抛出
 	 */
-	Boolean deleteTopicByTopicId(BigInteger topicId,BigInteger seminarId) throws InfoIllegalException;
+	void deleteTopicByTopicId(BigInteger topicId,BigInteger seminarId) throws InfoIllegalException;
 	//删除topic还要把每个选了这个topic的小组的选题属性修改为null
 	//想找到选了这个topic的小组，首先通过seminarId获得该讨论课所有小组，遍历判断是否选了这个topic
 	//SeminarGroupService sg=new SeminarGroupService();
@@ -87,7 +86,7 @@ public interface TopicService {
 	 * @return true删除成功 false删除失败
 	 * @exception InfoIllegalException groupId格式错误或topicId格式错误时抛出
 	 */
-	Boolean deleteTopicById(BigInteger groupId,BigInteger topicId)throws InfoIllegalException;
+	void deleteTopicById(BigInteger groupId,BigInteger topicId)throws InfoIllegalException;
 	/**
 	 * 按topicId删除SeminarGroupTopic表信息.
 	 * @author zhouzhongjun
@@ -95,7 +94,7 @@ public interface TopicService {
 	 * @return true删除成功 false删除失败
 	 * @exception InfoIllegalException topicId格式错误
 	 */
-	Boolean deleteSeminarGroupTopicByTopicId(BigInteger topicId)throws InfoIllegalException;
+	void deleteSeminarGroupTopicByTopicId(BigInteger topicId)throws InfoIllegalException;
 
 
 	/**
@@ -109,5 +108,5 @@ public interface TopicService {
 	 * @return true删除成功 false删除失败
 	 * @exception InfoIllegalException seminarId格式错误
 	 */
-	Boolean deleteTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException;
+	void deleteTopicBySeminarId(BigInteger seminarId) throws InfoIllegalException;
 }

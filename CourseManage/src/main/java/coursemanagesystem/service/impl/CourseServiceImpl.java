@@ -2,21 +2,18 @@ package coursemanagesystem.service.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
+import coursemanagesystem.entity.ClassInfo;
+import coursemanagesystem.entity.Course;
+import coursemanagesystem.service.ClassService;
+import coursemanagesystem.service.CourseService;
+import coursemanagesystem.service.UserService;
 import org.springframework.stereotype.Service;
-
-import course.bo.CourseBO;
-import course.entity.Course;
-import course.service.CourseService;
 
 
 @Service
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
 	
 	/**
 	 * 按userId获取与当前用户相关联的课程列表.
@@ -26,7 +23,7 @@ public class CourseServiceImpl implements CourseService{
 	 * @return null 课程列表
 	 */
 
-	public List<CourseBO> listCourseByUserId(BigInteger userId) {
+	public List<Course> listCourseByUserId(BigInteger userId) {
 		return null;
 	};	
 	
@@ -38,7 +35,7 @@ public class CourseServiceImpl implements CourseService{
 	 * @return courseId 新建课程的id
 	 */
 
-	public  BigInteger insertCourseByUserId(BigInteger userId,CourseBO course) {
+	public  BigInteger insertCourseByUserId(BigInteger userId,Course course) {
 		
 		BigInteger courseId = null;
 		return  courseId;
@@ -52,9 +49,9 @@ public class CourseServiceImpl implements CourseService{
 	 * @return course
 	 */
 
-	public  CourseBO getCourseByCourseId(BigInteger courseId) {
-		
-		CourseBO course=new CourseBO();
+	public  Course getCourseByCourseId(BigInteger courseId) {
+
+		Course course=new Course();
 		return course;
 		
 	};	
@@ -68,7 +65,7 @@ public class CourseServiceImpl implements CourseService{
 	 * @return true修改成功  false修改失败
 	 */
 
-	public boolean updateCourseByCourseId(BigInteger courseId,CourseBO course) {
+	public void updateCourseByCourseId(BigInteger courseId,Course course) {
 		
 		return true;
 		
@@ -79,12 +76,12 @@ public class CourseServiceImpl implements CourseService{
 	 * <p>先根据courseID删除Seminar 和 class,然后再将course的信息删除<br>  
 	 * @author zhouzhongjun
      * @param courseId 课程Id
-	 *@see SeminarService #deleteSemiarByCourseId(BigInteger courseId)
-	 *@see ClassService   #deleteClassByCourseId(BigInteger courseId)
+	 *@see SeminarServiceImpl #deleteSemiarByCourseId(BigInteger courseId)
+	 *@see ClassServiceImpl   #deleteClassByCourseId(BigInteger courseId)
 	 *@return true删除成功  false删除失败
 	 */
 
-	public boolean deleteCourseByCourseId(BigInteger courseId) {
+	public void deleteCourseByCourseId(BigInteger courseId) {
 		
 		
 		//删除自己
@@ -103,27 +100,79 @@ public class CourseServiceImpl implements CourseService{
 	 * @see CourseServiceImpl #getCourseByCourseId(BigInteger courseId)
 	 */
 
-	public List<CourseBO> listCourseByCourseName(String courseName)
+	public List<Course> listCourseByCourseName(String courseName)
 	{
-		List<CourseBO> list=new ArrayList<CourseBO>();
+		List<Course> list=new ArrayList<Course>();
 		return list;
 	}
-	
+	/**
+	 * 按课程名称获取班级列表.
+	 * <p>根据课程名获取课程ID，通过课程ID获取班级列表<br>
+	 * @author YeXiaona
+	 * @param courseName 课程名称
+	 * @return list 班级列表
+	 * @see CourseService #listCourseByCourseName(String courseName)
+	 * @see ClassService #listClassByCourseId(BigInteger courseId)
+	 * @exception InfoIllegalException courseId格式错误时抛出
+	 * @exception CourseNotFoundException 未找到课程
+	 * @exception ClassNotFoundException 未找到班级
+	 */
+	public List<ClassInfo> listClassByCourseName(String courseName) throws
+			InfoIllegalException,CourseNotFoundException,ClassNotFoundException{
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
+		return list;
+	}
+
 	/**
 	 * 根据教师名称列出课程名称.
 	 * <p>根据教师名称列出课程名称<br>
 	 * @author yexiaona
 	 * @param teacherName 教师名称
 	 * @return list 课程列表
-	 * @see UserService #listUserByUserName(String userName)
+	 * @see UserServiceImpl #listUserByUserName(String userName)
 	 * @see CourseServiceImpl #listCourseByUserId(BigInteger userId)
 	 */
 
-	public List<CourseBO> listCourseByTeacherName(String teacherName)
+	public List<Course> listCourseByTeacherName(String teacherName)
 	{
-		List<CourseBO> list=new ArrayList<CourseBO>();
+		List<Course> list=new ArrayList<Course>();
 		return list;
 	}
+	/**
+	 * 按教师名称获取班级列表.
+	 * <p>根据教师名称获取课程ID，通过课程ID获取班级列表<br>
+	 * @author YeXiaona
+	 * @param teacherName 教师名称
+	 * @return list 班级列表
+	 * @see UserService #listUserIdByUserName(String userName)
+	 * @see CourseService #listClassByUserId(BigInteger userId)
+	 * @exception UserNotFoundException 未找到用户
+	 * @exception CourseNotFoundException 未找到课程
+	 * @exception ClassNotFoundException 未找到班级
+	 */
+	public List<ClassInfo> listClassByTeacherName(String teacherName) throws
+			UserNotFoundException,CourseNotFoundException,ClassNotFoundException{
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
+		return list;
+	}
+	/**
+	 * 根据教师ID获取班级列表.
+	 * @author YeXiaona
+	 * @param userId 教师ID
+	 * @return list 班级列表
+	 * @see CourseService #listCourseByUserId(BigInteger userId)
+	 * @see ClassService #listClassByCourseId(BigInteger courseId)
+	 * @exception InfoIllegalException userId格式错误时抛出或courseId格式错误时抛出
+	 * @exception CourseNotFoundException 未找到课程
+	 * @exception ClassNotFoundException 未找到班级
+	 */
+	public List<ClassInfo> listClassByUserId(BigInteger userId)
+			throws InfoIllegalException,CourseNotFoundException,
+			ClassNotFoundException{
+		List<ClassInfo> list=new ArrayList<ClassInfo>();
+		return list;
+	}
+
 	
 	/*List<Course> courses = new ArrayList<Course>();
 	List<Course> selectCourses = new ArrayList<Course>();

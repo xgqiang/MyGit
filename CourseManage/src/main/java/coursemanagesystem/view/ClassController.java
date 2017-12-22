@@ -4,8 +4,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import course.service.impl.ClassServiceImpl;
-import course.service.impl.SeminarServiceImpl;
 import coursemanagesystem.service.impl.ClassServiceImpl;
 import coursemanagesystem.service.impl.SeminarServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import course.entity.Proportion;
-import course.entity.Seminar;
-import course.entity.Class;
-import course.entity.ClassTime;
-import course.service.ClassService;
-import course.service.SeminarService;
 
 
 @RestController
 @RequestMapping("/class")
 public class ClassController {
-	@Autowired
+	/*@Autowired
 	ClassServiceImpl classService=new ClassServiceImpl();
 	@Autowired
 	SeminarServiceImpl seminarService=new SeminarServiceImpl();
@@ -114,6 +106,6 @@ public class ClassController {
 		}
 		return "/#";
 	}
-	
+	*/
 	
 }

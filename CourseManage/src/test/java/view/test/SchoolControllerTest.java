@@ -22,7 +22,7 @@ import coursemanagesystem.mapper.SchoolMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes=SchoolApplication.class)
 public class SchoolControllerTest {
-	@Autowired
+	/*@Autowired
     private SchoolMapper schoolMapper;
 	@Test
 	public void findAllSchools() {
@@ -41,6 +41,6 @@ public class SchoolControllerTest {
 		School newSchool = schoolMapper.findSchoolById(user.getId());
         assertEquals("厦门大学", newSchool.getName());
         assertEquals("厦门市", newSchool.getCity());
-    }
+    }*/
 }
 

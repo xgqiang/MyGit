@@ -3,15 +3,15 @@ package coursemanagesystem.service.impl;
 import java.math.BigInteger;
 import java.util.List;
 
+import coursemanagesystem.entity.FixGroup;
+import coursemanagesystem.entity.SeminarGroup;
+import coursemanagesystem.entity.User;
+import coursemanagesystem.exception.FixGroupNotFoundException;
+import coursemanagesystem.service.FixGroupService;
 import org.springframework.stereotype.Service;
 
-import course.bo.FixGroupBO;
-import course.bo.GroupBO;
-import course.bo.UserBO;
-import course.service.FixGroupService;
-
 @Service
-public class FixGroupServiceImpl implements FixGroupService{
+public class FixGroupServiceImpl implements FixGroupService {
 	/**
 	 * 按FixGroupId删除FixGroupMember.
 	 * @author zhouzhongjun
@@ -19,7 +19,7 @@ public class FixGroupServiceImpl implements FixGroupService{
      * @return true删除成功  false删除失败
 	 */
 
-	public boolean deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId) {
+	public void deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId) {
 		
 		//删除自己
 		return true;
@@ -48,9 +48,9 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @return List 固定小组成员信息
 	 */
 
-	public List<UserBO> listFixGroupMemberByGroupId(BigInteger groupId)
+	public List<User> listFixGroupMemberByGroupId(BigInteger groupId)
     {
-    	List<UserBO> userBOs=null;
+    	List<User> userBOs=null;
     	return userBOs;
     }
 	/**
@@ -60,7 +60,7 @@ public class FixGroupServiceImpl implements FixGroupService{
      * @return null 固定分组列表
 	 */
 
-	public List<FixGroupBO> listFixGroupByClassId(BigInteger classId) {
+	public List<FixGroup> listFixGroupByClassId(BigInteger classId) {
 		
 		return null;
 	};
@@ -75,7 +75,7 @@ public class FixGroupServiceImpl implements FixGroupService{
      * @return true删除成功  false删除失败
 	 */
 
-	public boolean deleteFixGroupByClassId(BigInteger classId) {
+	public void deleteFixGroupByClassId(BigInteger classId) {
 		
 		//删除自己
 		return true;
@@ -90,7 +90,7 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @return BigInteger 若创建成功返回该小组的id，失败则返回-1
 	 */
 
-	public BigInteger insertFixGroupByClassId(BigInteger classId,FixGroupBO fixGroupBO)
+	public BigInteger insertFixGroupByClassId(BigInteger classId,FixGroup fixGroupBO)
     {
     	BigInteger fixGroupId = BigInteger.valueOf(-1);
     	return fixGroupId;
@@ -105,7 +105,7 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @see FixGroupServiceImpl #deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId)
 	 */
 
-	public Boolean deleteFixGroupByGroupId(BigInteger groupId)
+	public void deleteFixGroupByGroupId(BigInteger groupId)
     {
     	Boolean state=Boolean.valueOf(false);
     	return state;
@@ -120,7 +120,7 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @return Boolean 若创建成功返回true，失败返回false
 	 */
 
-	public Boolean updateFixGroupByGroupId(BigInteger groupId,FixGroupBO fixGroupBO)
+	public void updateFixGroupByGroupId(BigInteger groupId,FixGroup fixGroupBO)
     {
     	Boolean state=Boolean.valueOf(false);
     	return state;
@@ -135,9 +135,9 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @see FixGroupServiceImpl #listFixGroupMemberByGroupId(BigInteger groupId)
 	 */
 
-	public FixGroupBO getFixGroupByGroupId(BigInteger groupId)
+	public FixGroup getFixGroupByGroupId(BigInteger groupId)
     {
-    	FixGroupBO fixGroupBO=null;
+		FixGroup fixGroupBO=null;
     	return fixGroupBO;
     }
  
@@ -165,7 +165,7 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @return true or false 返回取消话题是否成功
 	 */
 
-	public boolean deleteTopicByGroupId(BigInteger groupId) {
+	public void deleteTopicByGroupId(BigInteger groupId) {
 		//TopicDao.deleteTopicByGroupId(BigInteger groupId)
 		return true;
 	}
@@ -177,15 +177,15 @@ public class FixGroupServiceImpl implements FixGroupService{
 	 * @param userId 学生id
 	 * @param classId 班级id
 	 * @return GroupBO 返回班级固定小组的信息 
-	 * @see UserService#getUserByUserId(BigInteger UserId)
+	 * @see UserServiceImpl#getUserByUserId(BigInteger UserId)
 	 */
 
-	public GroupBO getFixedGroupById(BigInteger userId,BigInteger classId){
+	public FixGroup getFixedGroupById(BigInteger userId,BigInteger classId){
 		//rs = UserService.listMembersById(BigInteger userId);
 		//for student_id in rs;
 		//UserService.UserBO getUserByUserId(BigInteger UserId)
 		//得到小组所有成员信息返回小组信息
-		GroupBO groupBO = new GroupBO();
+		FixGroup groupBO = new FixGroup();
 		return groupBO;
 	}
 
@@ -213,9 +213,18 @@ public class FixGroupServiceImpl implements FixGroupService{
      * @return
      */
 
-	public BigInteger updateSeminarGroupById(BigInteger groupId,GroupBO group){
-        BigInteger bi=null;
-        //修改此group
-        return bi;
-    }
+	/**
+	 * 根据groupId修改group.
+	 * <p>根据groupId修改group<br>
+	 * @author aixing
+	 * @param groupId 要修改的group的Id
+	 * @param group 新的group信息
+	 * @return Boolean 若更新成功返回true，失败返回false
+	 * @exception InfoIllegalException  信息不合法，id格式错误
+	 * @exception FixGroupNotFoundException 未找到小组
+	 */
+	public void updateSeminarGroupById(BigInteger groupId,SeminarGroup group) throws
+			InfoIllegalException,FixGroupNotFoundException{
+		return false;
+	}
 }

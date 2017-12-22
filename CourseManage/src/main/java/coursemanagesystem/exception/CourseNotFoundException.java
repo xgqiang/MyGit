@@ -1,4 +1,4 @@
 package coursemanagesystem.exception;
 
-public class CourseNotFoundException extends Exception{
+public class CourseNotFoundException {
 }
