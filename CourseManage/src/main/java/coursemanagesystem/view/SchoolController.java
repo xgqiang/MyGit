@@ -9,12 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/school")
 public class SchoolController {
-	@RequestMapping(method=GET)
+	@RequestMapping(value="/school",method=GET)
 	public String get_school() {
-		return "/student/course/group/message";
+		return null;
 	}
-	@RequestMapping(method=POST)
-	public String delete_school() {
-		return "/student/course/group/message";
+
+	@RequestMapping(value="/school",method=POST)
+	public String post_school() {
+		return null;
 	}
 }

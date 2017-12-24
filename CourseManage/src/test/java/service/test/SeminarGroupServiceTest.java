@@ -79,4 +79,6 @@ public class SeminarGroupServiceTest {
             e.printStackTrace();
         }
     }
+
+
 }

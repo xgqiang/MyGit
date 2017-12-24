@@ -23,7 +23,7 @@ public interface SeminarGroupMapper {
     List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) throws
             IllegalArgumentException,GroupNotFoundException;
     List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) throws
-            IllegalArgumentException,UserNotFoundException;
+            IllegalArgumentException;
     BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId) throws
             IllegalArgumentException,GroupNotFoundException;
     List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId) throws
@@ -33,7 +33,7 @@ public interface SeminarGroupMapper {
     Long insertSeminarGroupMemberByGroupId(@Param("seminarId")BigInteger seminarId,
                                            @Param("seminarGroupMember")SeminarGroupMember seminarGroupMember) throws
             IllegalArgumentException;
-    Long insertSeminarGroupBySeminarId(@Param("seminarId")BigInteger seminarId,
+    Long insertSeminarGroupBySeminarId(@Param("seminarId")BigInteger seminarId,@Param("classId") BigInteger classId,
                                              @Param("seminarGroup")SeminarGroup seminarGroup) throws
             IllegalArgumentException;
     void deleteSeminarGroupByGroupId(BigInteger groupId) throws
@@ -47,7 +47,10 @@ public interface SeminarGroupMapper {
                                     @Param("topicId")BigInteger topicId,@Param("topic")Topic topic) throws
             IllegalArgumentException,GroupNotFoundException;
     void automaticallyGrouping(BigInteger seminarId, BigInteger classId) throws
-               IllegalArgumentException,SeminarNotFoundException,ClassesNotFoundException;
+            IllegalArgumentException,ClassesNotFoundException,SeminarNotFoundException,
+            GroupNotFoundException,UserNotFoundException,InvalidOperationException;
+    void automaticallyAllotTopic(BigInteger seminarId) throws
+            IllegalArgumentException, SeminarNotFoundException, GroupNotFoundException;
     void assignLeaderById(@Param("groupId")BigInteger groupId,
                           @Param("userId")BigInteger userId) throws
             IllegalArgumentException,GroupNotFoundException,
@@ -59,5 +62,12 @@ public interface SeminarGroupMapper {
                                      @Param("userId") BigInteger userId) throws
             IllegalArgumentException,GroupNotFoundException;
     List<SeminarGroup> listGroupByTopicId(BigInteger topicId) throws
-            IllegalArgumentException,GroupNotFoundException;
+            IllegalArgumentException;
+
+    List<BigInteger> listAttendedStudentByClassIdAndSeminarId(@Param("seminarId") BigInteger seminarId,
+                                                        @Param("classId") BigInteger classId) throws
+            IllegalArgumentException;
+
+    List<BigInteger> listHaveChooseTopic(@Param("allSeminarGroupList")List<SeminarGroup> allSeminarGroupList) throws
+            IllegalArgumentException;
 }

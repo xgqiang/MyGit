@@ -7,10 +7,7 @@ import coursemanagesystem.entity.FixGroup;
 import coursemanagesystem.entity.FixGroupMember;
 import coursemanagesystem.entity.SeminarGroup;
 import coursemanagesystem.entity.User;
-import coursemanagesystem.exception.ClassesNotFoundException;
-import coursemanagesystem.exception.FixGroupNotFoundException;
-import coursemanagesystem.exception.InvalidOperationException;
-import coursemanagesystem.exception.UserNotFoundException;
+import coursemanagesystem.exception.*;
 import coursemanagesystem.mapper.FixGroupMapper;
 import coursemanagesystem.service.FixGroupService;
 import org.apache.ibatis.annotations.Param;
@@ -86,7 +83,7 @@ public class FixGroupServiceImpl implements FixGroupService {
 	 */
 
 	public BigInteger insertFixGroupByClassId(@Param("classId") BigInteger classId,@Param("userId") BigInteger userId) throws
-			IllegalArgumentException, ClassesNotFoundException {
+			IllegalArgumentException, UserNotFoundException {
 		FixGroup fixGroup=new FixGroup();
 		fixGroupMapper.insertFixGroupByClassId(classId,userId,fixGroup);
 		BigInteger fixGroupId =fixGroup.getId();
@@ -120,53 +117,6 @@ public class FixGroupServiceImpl implements FixGroupService {
 			FixGroupNotFoundException,IllegalArgumentException{
 		fixGroupMapper.updateFixGroupByGroupId(groupId,fixGroup);
     }
-    
-    /**
-	 * 查询固定小组.
-	 * ＜p＞按照id查询某一固定小组的信息（包括成员）<br>*
-	 * @author YeHongjie
-	 * @param groupId 小组的id
-	 * @return fixGroupBO 固定小组对象，若未找到相关小组返回空(null)
-	 * @see FixGroupServiceImpl #listFixGroupMemberByGroupId(BigInteger groupId)
-	 */
-
-	public List<FixGroupMember> getFixGroupByGroupId(BigInteger groupId) throws
-			FixGroupNotFoundException,IllegalArgumentException{
-		List<FixGroupMember> fixGroupMemberList=fixGroupMapper.getFixGroupByGroupId(groupId);
-    	return fixGroupMemberList;
-    }
- 
-
-    /**
-	 * 将学生加入小组.
-	 * ＜p＞将用户加入指定的小组<br>*
-	 * @author YeHongjie
-	 * @param userId 学生的id
-	 * @param groupId 要加入小组的id
-	 * @return BigInteger 若创建成功返回该条记录的id，失败则返回-1
-	 */
-
-	public BigInteger insertStudnetIntoGroup(@Param("userId") BigInteger userId,@Param("groupId") BigInteger groupId) throws
-			FixGroupNotFoundException,UserNotFoundException,
-			IllegalArgumentException,InvalidOperationException {
-		FixGroupMember fixGroupMember=new FixGroupMember();
-    	fixGroupMapper.insertStudnetIntoGroup(userId,groupId,fixGroupMember);
-		BigInteger fixGroupMemberId =fixGroupMember.getId();
-		return fixGroupMemberId;
-    }
-
-    /**
-	 * 小组取消话题.
-	 * <p>小组按小组id取消讨论课的话题的选择<br>
-	 * @author heqi
-	 * @param groupId 小组id
-	 * @return true or false 返回取消话题是否成功
-	 */
-
-	public void deleteTopicByGroupId(BigInteger groupId) throws
-			IllegalArgumentException,FixGroupNotFoundException{
-		fixGroupMapper.deleteTopicByGroupId(groupId);
-	}
 
     /**
 	 * 按id获取小组.
@@ -183,19 +133,80 @@ public class FixGroupServiceImpl implements FixGroupService {
 		return fixGroup;
 	}
 
+	/**
+	 * 按FixGroupId和UserId删除FixGroupMember中某个学生.
+	 * <p>按FixGroupId和UserId删除FixGroupMember中的某个学生<br>
+	 *
+	 * @param fixGroupId 固定分组Id
+	 * @param userId     组员的Id
+	 * @throws IllegalArgumentException  信息不合法，id格式错误
+	 * @throws FixGroupNotFoundException 未找到小组
+	 * @throws UserNotFoundException     不存在该学生
+	 * @author zhouzhongjun
+	 */
+	public void deleteFixGroupUserById(@Param("fixGroupId") BigInteger fixGroupId, @Param("userId") BigInteger userId) throws
+			IllegalArgumentException, FixGroupNotFoundException, UserNotFoundException{
+		fixGroupMapper.deleteFixGroupUserById(fixGroupId,userId);
+	}
 
 	/**
-	 * 根据groupId修改group.
-	 * <p>根据groupId修改group<br>
-	 * @author aixing
-	 * @param groupId 要修改的group的Id
-	 * @param group 新的group信息
-	 * @return Boolean 若更新成功返回true，失败返回false
-	// * @exception InfoIllegalException  信息不合法，id格式错误
-	 * @exception FixGroupNotFoundException 未找到小组
+	 * 查询固定小组.
+	 * ＜p＞按照id查询某一固定小组的信息（包括成员）<br>
+	 *
+	 * @param groupId 小组的id
+	 * @return List 固定小组成员列表对象，若未找到相关成员返回空(null)
+	 * @throws IllegalArgumentException        信息不合法，id格式错误
+	 * @author YeHongjie
+	 * @see FixGroupService #listFixGroupMemberByGroupId(BigInteger groupId)
 	 */
-	public void updateSeminarGroupById(@Param("groupId") BigInteger groupId, @Param("group") SeminarGroup group) throws
-			IllegalArgumentException,FixGroupNotFoundException{
-		fixGroupMapper.updateSeminarGroupById(groupId,group);
+	public List<FixGroupMember> listFixGroupByGroupId(BigInteger groupId) throws
+			IllegalArgumentException, FixGroupNotFoundException {
+		List<FixGroupMember> fixGroupMemberList= fixGroupMapper.listFixGroupByGroupId(groupId);
+		return fixGroupMemberList;
+	}
+
+	/**
+	 * 将学生加入小组.
+	 * ＜p＞将用户加入指定的小组<br>
+	 *
+	 * @param userId  学生的id
+	 * @param groupId 要加入小组的id
+	 * @return BigInteger 若创建成功返回该条记录的id，失败则返回-1
+	 * @throws IllegalArgumentException  信息不合法，id格式错误
+	 * @throws FixGroupNotFoundException 未找到小组
+	 * @throws ClassesNotFoundException 未找到班级
+	 * @throws UserNotFoundException     不存在该学生
+	 * @throws InvalidOperationException 待添加学生已经在小组里了
+	 * @author YeHongjie
+	 */
+
+	public BigInteger insertStudentIntoGroup(BigInteger userId, BigInteger groupId) throws
+			IllegalArgumentException, FixGroupNotFoundException, UserNotFoundException,ClassesNotFoundException,
+			InvalidOperationException{
+		FixGroupMember fixGroupMember=new FixGroupMember();
+		fixGroupMapper.insertStudnetIntoGroup(userId,groupId,fixGroupMember);
+		BigInteger fixGroupMemberId=fixGroupMember.getId();
+		return fixGroupMemberId;
+	}
+	/**
+	 * 将固定小组作为讨论课小组名单.
+	 *
+	 * @param semianrId    讨论课ID
+	 * @param fixedGroupId 小组ID
+	 * @throws IllegalArgumentException  信息不合法，id格式错误
+	 * @throws FixGroupNotFoundException 未找到小组
+	 * @throws SeminarNotFoundException  未找到讨论课
+	 * @author qinlingyun
+	 */
+	public void fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws
+			IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException{
+		List<FixGroup> fixGroupList=fixGroupMapper.listSeminarIdAndLeaderIdByFixedGroupId(fixedGroupId);
+		BigInteger classId=fixGroupList.get(1).getClassInfo().getId();
+		BigInteger leaderId=fixGroupList.get(1).getLeader().getId();
+		SeminarGroup seminarGroup=new SeminarGroup();
+		fixGroupMapper.insertSeminarGroupBySeminarIdAndLeaderId(semianrId,classId,leaderId,seminarGroup);
+		BigInteger seminarGroupId=seminarGroup.getId();
+		List<BigInteger> studentIdList=fixGroupMapper.listStudentIdByFixGroupId(fixedGroupId);
+		fixGroupMapper.insertSeminarGroupMemberBySeminarGroupId(seminarGroupId,studentIdList);
 	}
 }

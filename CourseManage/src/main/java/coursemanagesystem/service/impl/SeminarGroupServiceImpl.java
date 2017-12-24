@@ -1,17 +1,14 @@
 package coursemanagesystem.service.impl;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
-import coursemanagesystem.entity.SeminarGroup;
-import coursemanagesystem.entity.SeminarGroupMember;
-import coursemanagesystem.entity.Topic;
-import coursemanagesystem.entity.User;
+import coursemanagesystem.entity.*;
 import coursemanagesystem.exception.*;
 import coursemanagesystem.mapper.SeminarGroupMapper;
 import coursemanagesystem.service.SeminarGroupService;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +42,6 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	public BigInteger insertSeminarGroupMemberById(BigInteger userId, BigInteger groupId) throws
 			IllegalArgumentException,GroupNotFoundException,
 			UserNotFoundException,InvalidOperationException{
-		//BigInteger seminarGroupMemberId=(BigInteger)SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId);
 		SeminarGroupMember seminarGroupMember=new SeminarGroupMember();
 		SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId,seminarGroupMember);
 		BigInteger seminarGroupMemberId=seminarGroupMember.getId();
@@ -76,7 +72,7 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 */
 
 	public List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) throws
-			IllegalArgumentException,UserNotFoundException{
+			IllegalArgumentException{
     	List<SeminarGroup> serminarGroups = SeminarGroupMapper.listSeminarGroupIdByStudentId(userId);
     	return serminarGroups;
     }
@@ -126,6 +122,23 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 		SeminarGroupMapper.deleteSeminarGroupBySeminarId(seminarId);
 	};
 
+	/**
+	 * 创建讨论课小组.
+	 * <p>在指定讨论课下创建讨论课小组<br>
+	 * @author YeHongjie
+	 * @param seminarId 讨论课的id
+     * @param classId 班级id
+	 * @param seminarGroup 小组信息
+	 * @see SeminarGroupService #insertSeminarGroupMemberByGroupId(BigInteger groupId,SeminarGroupMember SeminarGroupMember)
+	 * @return BigInteger 若创建成功返回该小组的id，失败则返回-1
+	 * @exception IllegalArgumentException 信息不合法，id格式错误
+	 */
+	public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, BigInteger classId,
+											 SeminarGroup seminarGroup) throws IllegalArgumentException{
+		SeminarGroupMapper.insertSeminarGroupBySeminarId(seminarId,classId,seminarGroup);
+		BigInteger seminarGroupId=seminarGroup.getId();
+		return seminarGroupId;
+	}
 
 	/**
 	 * 创建小组成员信息.
@@ -142,21 +155,6 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 		return seminarGroupMemberId;
 	}
 
-	/**
-	 * 创建讨论课小组.
-	 * ＜p＞在指定讨论课下创建讨论课小组<br>*
-	 * @author YeHongjie
-	 * @param seminarId 讨论课的id
-	 * @param seminarGroup 小组信息
-	 * @return BigInteger 若创建成功返回该小组的id，失败则返回-1
-	 */
-
-	public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup) throws
-			IllegalArgumentException{
-    	 SeminarGroupMapper.insertSeminarGroupBySeminarId(seminarId,seminarGroup);
-		BigInteger seminarGroupId=seminarGroup.getId();
-    	return seminarGroupId;
-    }
     
     /**
 	 * 删除讨论课小组.
@@ -211,7 +209,7 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @exception GroupNotFoundException 未找到小组
 	 */
 	public List<SeminarGroup> listGroupByTopicId(BigInteger topicId) throws
-			IllegalArgumentException,GroupNotFoundException{
+			IllegalArgumentException{
 		List<SeminarGroup> seminarGroupList=SeminarGroupMapper.listGroupByTopicId(topicId);
 		return seminarGroupList;
 	}
@@ -265,10 +263,73 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 */
 
 	public void automaticallyGrouping(BigInteger seminarId,BigInteger classId) throws
-			IllegalArgumentException,SeminarNotFoundException,ClassesNotFoundException {
-
+			IllegalArgumentException,ClassesNotFoundException,SeminarNotFoundException,
+			GroupNotFoundException,UserNotFoundException,InvalidOperationException {
+		List<BigInteger> attendedStudentList=SeminarGroupMapper.listAttendedStudentByClassIdAndSeminarId(seminarId,classId);
+		List<SeminarGroup> seminarGroupList=new ArrayList<SeminarGroup>();
+		int groupCount=0;
+		for(int i=0;i<attendedStudentList.size();i++){
+			if(i%6==0){
+				SeminarGroup seminarGroupTemp=new SeminarGroup();
+				User leader=new User();
+				BigInteger leaderId=attendedStudentList.get(groupCount);
+				leader.setId(leaderId);
+				seminarGroupTemp.setLeader(leader);
+				seminarGroupList.add(seminarGroupTemp);
+				groupCount++;
+			}
+		}
+		for(int j=0;j<groupCount;j++){
+			SeminarGroup seminarGroup=seminarGroupList.get(0);
+			SeminarGroupMapper.insertSeminarGroupBySeminarId(seminarId,classId,seminarGroup);
+			BigInteger groupId=seminarGroup.getId();
+			if(j==groupCount-1){
+				for(int k=j*6;k<attendedStudentList.size();k++){
+					BigInteger userId=attendedStudentList.get(k);
+					SeminarGroupMember seminarGroupMember=new SeminarGroupMember();
+					SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId,seminarGroupMember);
+				}
+			}else{
+				for(int k=j*6;k<j*6+6;k++){
+					BigInteger userId=attendedStudentList.get(k);
+					SeminarGroupMember seminarGroupMember=new SeminarGroupMember();
+					SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId,seminarGroupMember);
+				}
+			}
+		}
     }
-
+	/**
+	 * 新增定时器方法.
+	 * <p>随机分组情况下，签到结束后十分钟给没有选择话题的小组分配话题<br>
+	 * @author qinlingyun
+	 * @param seminarId 讨论课的id
+	 * @exception IllegalArgumentException 信息不合法，id格式错误
+	 * @exception SeminarNotFoundException 未找到讨论课
+	 * @exception GroupNotFoundException 未找到小组
+	 */
+	public void automaticallyAllotTopic(BigInteger seminarId) throws
+			IllegalArgumentException, SeminarNotFoundException, GroupNotFoundException{
+		List<SeminarGroup> allSeminarGroupList=SeminarGroupMapper.listSeminarGroupBySeminarId(seminarId);
+		List<BigInteger> haveChooseTopicGroupList=SeminarGroupMapper.listHaveChooseTopic(allSeminarGroupList);
+		List<SeminarGroup> notHaveChooseTopicGroupList=new ArrayList<SeminarGroup>();
+		for(int i=0;i<allSeminarGroupList.size();i++){
+			if(!allSeminarGroupList.get(i).getId().equals(haveChooseTopicGroupList.get(i))){
+				notHaveChooseTopicGroupList.add(allSeminarGroupList.get(i));
+			}
+		}
+		for(int j=0;j<notHaveChooseTopicGroupList.size();j++){
+			BigInteger groupId=notHaveChooseTopicGroupList.get(j).getId();
+			if(j%2==0){
+				BigInteger topicId=new BigInteger("1");
+				Topic topic=new Topic();
+				SeminarGroupMapper.insertTopicByGroupId(groupId,topicId,topic);
+			}else{
+				BigInteger topicId=new BigInteger("2");
+				Topic topic=new Topic();
+				SeminarGroupMapper.insertTopicByGroupId(groupId,topicId,topic);
+			}
+		}
+	}
 	/**
 	 * 成为组长.
 	 * <p>同学按小组id和自身id成为组长<br>

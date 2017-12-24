@@ -4,10 +4,7 @@ import coursemanagesystem.entity.FixGroup;
 import coursemanagesystem.entity.FixGroupMember;
 import coursemanagesystem.entity.SeminarGroup;
 import coursemanagesystem.entity.User;
-import coursemanagesystem.exception.ClassesNotFoundException;
-import coursemanagesystem.exception.FixGroupNotFoundException;
-import coursemanagesystem.exception.InvalidOperationException;
-import coursemanagesystem.exception.UserNotFoundException;
+import coursemanagesystem.exception.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
@@ -22,13 +19,14 @@ public interface FixGroupMapper {
 
     List<FixGroup> listFixGroupByClassId(BigInteger classId)throws
             IllegalArgumentException;
-
+    List<BigInteger> listStudentIdByFixGroupId(BigInteger fixGroupId)throws
+            IllegalArgumentException;
     void deleteFixGroupByClassId(BigInteger classId)throws
             IllegalArgumentException,ClassesNotFoundException;
 
     Long insertFixGroupByClassId(@Param("classId") BigInteger classId, @Param("userId") BigInteger userId,
                                  @Param("fixGroup") FixGroup fixGroup)throws
-            IllegalArgumentException,ClassesNotFoundException;
+            IllegalArgumentException,UserNotFoundException;
 
     void deleteFixGroupByGroupId(BigInteger groupId)throws
             IllegalArgumentException,FixGroupNotFoundException;
@@ -36,7 +34,11 @@ public interface FixGroupMapper {
     void updateFixGroupByGroupId(@Param("groupId") BigInteger groupId, @Param("fixGroup") FixGroup fixGroup)throws
             IllegalArgumentException,FixGroupNotFoundException;
 
-    List<FixGroupMember> getFixGroupByGroupId(BigInteger groupId)throws
+    void insertSeminarGroupMemberBySeminarGroupId(@Param("seminarGroupId") BigInteger seminarGroupId,
+                                                  @Param("studentList") List<BigInteger> studentList)throws
+            IllegalArgumentException,FixGroupNotFoundException;
+
+    List<FixGroupMember> listFixGroupByGroupId(BigInteger groupId)throws
             IllegalArgumentException,FixGroupNotFoundException;
 
     Long insertStudnetIntoGroup(@Param("userId") BigInteger userId, @Param("groupId") BigInteger groupId,
@@ -44,14 +46,16 @@ public interface FixGroupMapper {
             IllegalArgumentException,FixGroupNotFoundException,
             InvalidOperationException,UserNotFoundException;
 
-    void deleteTopicByGroupId(BigInteger groupId)throws
-            FixGroupNotFoundException,IllegalArgumentException;
+
+    void deleteFixGroupUserById(@Param("fixGroupId") BigInteger fixGroupId,@Param("userId") BigInteger userId) throws
+            IllegalArgumentException, FixGroupNotFoundException, UserNotFoundException;
 
     FixGroup getFixedGroupById(@Param("userId") BigInteger userId, @Param("classId") BigInteger classId)throws
             IllegalArgumentException,ClassesNotFoundException,UserNotFoundException;
 
-    void updateSeminarGroupById(@Param("groupId") BigInteger groupId, @Param("group") SeminarGroup group)throws
-            IllegalArgumentException,FixGroupNotFoundException;
-
-    void fixedGroupToSeminarGroup(@Param("semianrId") BigInteger semianrId,@Param("fixedGroupId") BigInteger fixedGroupId);
+    List<FixGroup> listSeminarIdAndLeaderIdByFixedGroupId(@Param("fixedGroupId") BigInteger fixedGroupId) throws
+            IllegalArgumentException, FixGroupNotFoundException;
+    Long insertSeminarGroupBySeminarIdAndLeaderId(@Param("semianrId") BigInteger semianrId,@Param("classId") BigInteger classId,
+                                                  @Param("leaderId") BigInteger leaderId, @Param("seminarGroup") SeminarGroup seminarGroup) throws
+            IllegalArgumentException, FixGroupNotFoundException;
 }
