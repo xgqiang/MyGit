@@ -1,1 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="coursemanagesystem.mapper.FixGroupMapper">
+    <resultMap id="FixGroupResultMap" type="FixGroup">
+        <id column="id" property="id" />
+        <result column="class_id" property="classInfo.id" />
+        <result column="leader_id" property="leader.id" />
+    </resultMap>
+    <resultMap id="FixGroupMemberResultMap" type="FixGroupMember">
+        <id column="id" property="id" />
+        <result column="fix_group_id" property="fixGroup.id" />
+        <result column="student_id" property="student.id" />
+    </resultMap>
+    <resultMap id="UserResultMap" type="User">
+        <id column="id" property="id" />
+        <result column="phone" property="phone" />
+        <result column="wechat_id" property="wechatId" />
+        <result column="openid" property="openid" />
+        <result column="avatar" property="avatar" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+        <result column="school_id" property="school.id" />
+        <result column="gender" property="gender" />
+        <result column="type" property="type" />
+        <result column="number" property="number" />
+        <result column="education" property="education" />
+        <result column="title" property="title" />
+        <result column="email" property="email" />
+    </resultMap>
+
+    <insert id="insertFixGroupByClassId">
+        <selectKey resultType="java.math.BigInteger" keyProperty="fixGroup.id" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into fix_group(class_id, leader_id)
+        values(#{classId},#{userId});
+    </insert>
+    <insert id="insertStudnetIntoGroup">
+        <selectKey resultType="java.math.BigInteger" keyProperty="fixGroupMember.id" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+        insert into fix_group_member(fix_group_id, student_id)
+        values(#{groupId},#{userId});
+    </insert>
+
+    <update id="updateFixGroupByGroupId">
+        update fix_group
+        set id=#{fixGroup.id}
+        where id=#{groupId};
+    </update>
+
+    <update id="updateSeminarGroupById">
+        update seminar_group
+        set fix_group_id=#{group.id}
+        where fix_group_id=#{groupId};
+    </update>
+
+
+    <delete id="deleteFixGroupByClassId">
+        delete from fix_group where class_id=#{classId};
+    </delete>
+    <delete id="deleteFixGroupByGroupId">
+        delete from fix_group where id=#{groupId};
+    </delete>
+    <delete id="deleteFixGroupMemberByFixGroupId">
+        delete from fix_group_member where id=#{fixGroupId};
+    </delete>
+    <delete id="deleteTopicByGroupId">
+        delete from seminar_group_topic where seminar_group_id=#{groupId};
+    </delete>
+    <select id="getFixedGroupById" resultMap="FixGroupResultMap">
+        select id,class_id,leader_id
+        from fix_group
+        where class_id=#{classId}
+        and id in
+        (select fix_group_id
+        from fix_group_member
+        where student_id=#{userId});
+    </select>
+    <select id="getFixGroupByGroupId" resultMap="FixGroupMemberResultMap">
+        select id,fix_group_id,student_id
+        from fix_group_member
+        where fix_group_id=#{groupId};
+    </select>
+    <select id="listFixGroupByClassId" resultMap="FixGroupResultMap">
+        select id,class_id,leader_id
+        from fix_group
+        where class_id=#{classId};
+    </select>
+    <select id="listFixGroupMemberByGroupId" resultMap="UserResultMap">
+        select id,phone, wechat_id, openid, avatar, password, name, school_id, gender, type, number, education, title, email
+        from user_info
+        where id in
+        (select student_id
+        from fix_group_member
+        where fix_group_id=#{groupId})
+    </select>
+</mapper>

@@ -31,11 +31,11 @@
     </resultMap>
 
     <insert id="insertSeminarGroupMemberById">
-        insert into seminar_group_member(seminar_group_id,student_id)
-        values(#{groupId},#{userId})
-        <selectKey resultType="java.math.BigInteger" keyProperty="id" order="AFTER">
+        <selectKey resultType="java.math.BigInteger" keyProperty="seminarGroupMember.id" order="AFTER">
             SELECT last_insert_id()
         </selectKey>
+        insert into seminar_group_member(seminar_group_id,student_id)
+        values(#{groupId},#{userId})
     </insert>
     <insert id="insertSeminarGroupBySeminarId" parameterType="SeminarGroup">
         <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroup.id">
@@ -50,10 +50,10 @@
             SELECT last_insert_id()
         </selectKey>
         insert into seminar_group_member(seminar_group_id, student_id)
-        values(#{groupId},#{student.id})
+        values(#{groupId},#{seminarGroupMember.student.id})
     </insert>
     <insert id="insertTopicByGroupId">
-        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="id">
+        <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="topic.id">
             SELECT last_insert_id()
         </selectKey>
         insert into seminar_group_topic(topic_id, seminar_group_id)
@@ -78,6 +78,13 @@
         delete from seminar_group_member
         where seminar_group_id=#{seminarGroupId}
     </delete>
+    <delete id="deleteSeminarGroupMemberBySeminarId">
+        delete from seminar_group_member
+        where id in
+        (select id
+        from seminar_group
+        where seminar_id=#{seminarId});
+    </delete>
     <delete id="deleteSeminarGroupBySeminarId">
         delete from seminar_group
         where seminar_id =#{seminarId}
@@ -92,7 +99,7 @@
     </delete>
 
 
-    <select id="listSeminarGroupMemberByGroupId" resultMap="User">
+    <select id="listSeminarGroupMemberByGroupId" resultMap="UserResultMap">
         select id,phone, wechat_id, openid, avatar, password, name, school_id, gender, type, number, education, title, email
         from user_info
         where id in

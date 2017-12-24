@@ -2,33 +2,62 @@ package coursemanagesystem.mapper;
 
 import coursemanagesystem.entity.SeminarGroup;
 import coursemanagesystem.entity.SeminarGroupMember;
+import coursemanagesystem.entity.Topic;
 import coursemanagesystem.entity.User;
+import coursemanagesystem.exception.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.security.acl.Group;
 import java.util.List;
 
 public interface SeminarGroupMapper {
-    void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId);
-    BigInteger insertSeminarGroupMemberById(BigInteger userId, BigInteger groupId);
-    List<User> listSeminarGroupMemberByGroupId(BigInteger groupId);
-    List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId);
-    BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId);
-    List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId);
-    void deleteSeminarGroupBySeminarId(BigInteger seminarId);
-    BigInteger insertSeminarGroupMemberByGroupId(BigInteger seminarId, SeminarGroupMember seminarGroupMember);
-    BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup);
-    void deleteSeminarGroupByGroupId(BigInteger groupId);
-    SeminarGroup getSeminarGroupByGroupId(BigInteger groupId);
-    //BigInteger getSeminarGroupById1(BigInteger userId, BigInteger seminarId);
-    BigInteger getSeminarGroupLeaderById(BigInteger userId, BigInteger seminarId);
-    //BigInteger insertStudnetIntoGroup(BigInteger userId, BigInteger groupId);
-    BigInteger insertTopicByGroupId(BigInteger groupId, BigInteger topicId);
-   // void automaticallyGrouping(BigInteger seminarId, BigInteger classId);
-    void assignLeaderById(BigInteger groupId,BigInteger userId);
-    void resignLeaderById(BigInteger groupId,BigInteger userId);
-    //BigInteger updateSeminarGroupById(BigInteger groupId, Group group);
-    SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId);
-   // List<SeminarGroup> listGroupBySeminarId(BigInteger seminarId);
-    List<SeminarGroup> listGroupByTopicId(BigInteger topicId);
+    void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) throws
+            IllegalArgumentException;
+    void deleteSeminarGroupMemberBySeminarId(BigInteger seminarId) throws
+            IllegalArgumentException;
+    Long insertSeminarGroupMemberById(@Param("userId") BigInteger userId, @Param("groupId") BigInteger groupId,
+                                            @Param("seminarGroupMember")SeminarGroupMember seminarGroupMember) throws
+            IllegalArgumentException,GroupNotFoundException,
+            UserNotFoundException,InvalidOperationException;
+    List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) throws
+            IllegalArgumentException,GroupNotFoundException;
+    List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) throws
+            IllegalArgumentException,UserNotFoundException;
+    BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId) throws
+            IllegalArgumentException,GroupNotFoundException;
+    List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId) throws
+            IllegalArgumentException,SeminarNotFoundException;
+    void deleteSeminarGroupBySeminarId(BigInteger seminarId) throws
+            IllegalArgumentException;
+    Long insertSeminarGroupMemberByGroupId(@Param("seminarId")BigInteger seminarId,
+                                           @Param("seminarGroupMember")SeminarGroupMember seminarGroupMember) throws
+            IllegalArgumentException;
+    Long insertSeminarGroupBySeminarId(@Param("seminarId")BigInteger seminarId,
+                                             @Param("seminarGroup")SeminarGroup seminarGroup) throws
+            IllegalArgumentException;
+    void deleteSeminarGroupByGroupId(BigInteger groupId) throws
+            IllegalArgumentException;
+    SeminarGroup getSeminarGroupByGroupId(BigInteger groupId) throws
+            IllegalArgumentException,GroupNotFoundException;
+    BigInteger getSeminarGroupLeaderById(@Param("userId")BigInteger userId,
+                                         @Param("seminarId")BigInteger seminarId) throws
+            IllegalArgumentException;
+    Long insertTopicByGroupId(@Param("groupId")BigInteger groupId,
+                                    @Param("topicId")BigInteger topicId,@Param("topic")Topic topic) throws
+            IllegalArgumentException,GroupNotFoundException;
+    void automaticallyGrouping(BigInteger seminarId, BigInteger classId) throws
+               IllegalArgumentException,SeminarNotFoundException,ClassesNotFoundException;
+    void assignLeaderById(@Param("groupId")BigInteger groupId,
+                          @Param("userId")BigInteger userId) throws
+            IllegalArgumentException,GroupNotFoundException,
+            UserNotFoundException,InvalidOperationException;
+    void resignLeaderById(@Param("groupId") BigInteger groupId,
+                          @Param("userId") BigInteger userId) throws
+            IllegalArgumentException,GroupNotFoundException;
+    SeminarGroup getSeminarGroupById(@Param("seminarId") BigInteger seminarId,
+                                     @Param("userId") BigInteger userId) throws
+            IllegalArgumentException,GroupNotFoundException;
+    List<SeminarGroup> listGroupByTopicId(BigInteger topicId) throws
+            IllegalArgumentException,GroupNotFoundException;
 }

@@ -1,13 +1,12 @@
 package coursemanagesystem.entity;
 
 import java.math.BigInteger;
-import java.util.Date;
 
 public class Event {
     private BigInteger id;
-    private String bean;
+    private String beanName;
+    private String methodName;
     private String parameter;
-    private Date time;
 
     public BigInteger getId() {
         return id;
@@ -17,12 +16,12 @@ public class Event {
         this.id = id;
     }
 
-    public String getBean() {
-        return bean;
+    public String getBeanName() {
+        return beanName;
     }
 
-    public void setBean(String bean) {
-        this.bean = bean;
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
     }
 
     public String getParameter() {
@@ -33,11 +32,11 @@ public class Event {
         this.parameter = parameter;
     }
 
-    public Date getTime() {
-        return time;
+    public String getMethodName() {
+        return methodName;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 }

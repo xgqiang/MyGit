@@ -5,24 +5,20 @@ import java.util.List;
 
 import coursemanagesystem.entity.SeminarGroup;
 import coursemanagesystem.entity.SeminarGroupMember;
+import coursemanagesystem.entity.Topic;
 import coursemanagesystem.entity.User;
-import coursemanagesystem.exception.GroupNotFoundException;
-import coursemanagesystem.exception.InvalidOperationException;
-import coursemanagesystem.exception.UserNotFoundException;
+import coursemanagesystem.exception.*;
 import coursemanagesystem.mapper.SeminarGroupMapper;
 import coursemanagesystem.service.SeminarGroupService;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class SeminarGroupServiceImpl implements SeminarGroupService {
-	/**
-	 * 按seminarGroupId删除SeminarGroupMember信息.
-	 * @author zhouzhongjun
-     * @param seminarGroupId 讨论课小组Id
-     *  @return true/false 是否成功删除
-	 */
+
 	@Autowired
 	private SeminarGroupMapper SeminarGroupMapper;
     /**
@@ -31,7 +27,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
      * @param seminarGroupId 讨论课小组Id
      * @return true/false 是否成功删除
      */
-	public void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) {
+	public void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId) throws
+			IllegalArgumentException{
 		SeminarGroupMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupId);
 	};
 	
@@ -45,9 +42,14 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 */
 
      //throws IllegalArgumentException,UserNotFoundException,GroupNotFoundException,InvalidOperationException
-	public BigInteger insertSeminarGroupMemberById(BigInteger userId,BigInteger groupId) {
-		BigInteger id=SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId);
-		return id;
+	public BigInteger insertSeminarGroupMemberById(BigInteger userId, BigInteger groupId) throws
+			IllegalArgumentException,GroupNotFoundException,
+			UserNotFoundException,InvalidOperationException{
+		//BigInteger seminarGroupMemberId=(BigInteger)SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId);
+		SeminarGroupMember seminarGroupMember=new SeminarGroupMember();
+		SeminarGroupMapper.insertSeminarGroupMemberById(userId,groupId,seminarGroupMember);
+		BigInteger seminarGroupMemberId=seminarGroupMember.getId();
+		return seminarGroupMemberId;
     }
     
 	/**
@@ -58,7 +60,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @return List 讨论课小组成员信息
 	 */
 
-	public List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) {
+	public List<User> listSeminarGroupMemberByGroupId(BigInteger groupId) throws
+			IllegalArgumentException,GroupNotFoundException{
     	List<User> users=SeminarGroupMapper.listSeminarGroupMemberByGroupId(groupId);
     	return users;
     }
@@ -72,7 +75,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @return list 讨论课小组列表
 	 */
 
-	public List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) {
+	public List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) throws
+			IllegalArgumentException,UserNotFoundException{
     	List<SeminarGroup> serminarGroups = SeminarGroupMapper.listSeminarGroupIdByStudentId(userId);
     	return serminarGroups;
     }
@@ -86,7 +90,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @return leaderId 讨论课小组队长id
 	 */
 
-	public BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId) {
+	public BigInteger getSeminarGroupLeaderByGroupId(BigInteger groupId) throws
+			IllegalArgumentException,GroupNotFoundException{
     	BigInteger leaderId=SeminarGroupMapper.getSeminarGroupLeaderByGroupId(groupId);
     	return leaderId;
     }
@@ -99,7 +104,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
      * @return null 讨论课小组列表
 	 */
 
-	public List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId) {
+	public List<SeminarGroup> listSeminarGroupBySeminarId(BigInteger seminarId) throws
+			IllegalArgumentException,SeminarNotFoundException{
 		List<SeminarGroup> seminarGroups=SeminarGroupMapper.listSeminarGroupBySeminarId(seminarId);
 		return seminarGroups;
 	};
@@ -114,8 +120,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @return true删除成功 false删除失败
 	 */
 
-	public void deleteSeminarGroupBySeminarId(BigInteger seminarId) {
-		SeminarGroupMapper.deleteSeminarGroupMemberBySeminarGroupId(seminarId);
+	public void deleteSeminarGroupBySeminarId(BigInteger seminarId) throws
+			IllegalArgumentException{
+		SeminarGroupMapper.deleteSeminarGroupMemberBySeminarId(seminarId);
 		SeminarGroupMapper.deleteSeminarGroupBySeminarId(seminarId);
 	};
 
@@ -127,10 +134,11 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @param seminarGroupMember 小组成员信息
 	 * @return BigInteger 若创建成功返回该小组成员表的id，失败则返回-1
 	 */
-	public BigInteger insertSeminarGroupMemberByGroupId(BigInteger groupId,
-												 SeminarGroupMember seminarGroupMember){
+	public BigInteger insertSeminarGroupMemberByGroupId(BigInteger groupId, SeminarGroupMember seminarGroupMember) throws
+			IllegalArgumentException{
 
-		BigInteger seminarGroupMemberId = SeminarGroupMapper.insertSeminarGroupMemberByGroupId(groupId,seminarGroupMember);
+		SeminarGroupMapper.insertSeminarGroupMemberByGroupId(groupId,seminarGroupMember);
+		BigInteger seminarGroupMemberId=seminarGroupMember.getId();
 		return seminarGroupMemberId;
 	}
 
@@ -143,8 +151,10 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @return BigInteger 若创建成功返回该小组的id，失败则返回-1
 	 */
 
-	public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId,SeminarGroup seminarGroup) {
-    	BigInteger seminarGroupId = SeminarGroupMapper.insertSeminarGroupBySeminarId(seminarId,seminarGroup);
+	public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup) throws
+			IllegalArgumentException{
+    	 SeminarGroupMapper.insertSeminarGroupBySeminarId(seminarId,seminarGroup);
+		BigInteger seminarGroupId=seminarGroup.getId();
     	return seminarGroupId;
     }
     
@@ -157,7 +167,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @see SeminarGroupServiceImpl #deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId)
 	 */
 
-	public void deleteSeminarGroupByGroupId(BigInteger groupId) {
+	public void deleteSeminarGroupByGroupId(BigInteger groupId) throws
+			IllegalArgumentException{
 		SeminarGroupMapper.deleteSeminarGroupByGroupId(groupId);
     }
     
@@ -170,7 +181,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @see SeminarGroupServiceImpl #listSeminarGroupMemberByGroupId(BigInteger groupId)
 	 */
 
-	public SeminarGroup getSeminarGroupByGroupId(BigInteger groupId) {
+	public SeminarGroup getSeminarGroupByGroupId(BigInteger groupId) throws
+			IllegalArgumentException,GroupNotFoundException{
 		SeminarGroup seminarGroup=SeminarGroupMapper.getSeminarGroupByGroupId(groupId);
     	return seminarGroup;
     }
@@ -184,7 +196,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	// * @exception InfoIlleglException 信息不合法，id格式错误
 	 * @exception GroupNotFoundException 未找到小组
 	 */
-	public SeminarGroup getSeminarGroupById(BigInteger seminarId,BigInteger userId){
+	public SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId) throws
+			IllegalArgumentException,GroupNotFoundException{
 		SeminarGroup seminarGroup=SeminarGroupMapper.getSeminarGroupById(seminarId,userId);
 		return seminarGroup;
 	}
@@ -197,7 +210,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 //* @exception InfoIllegalException 信息不合法，id格式错误
 	 * @exception GroupNotFoundException 未找到小组
 	 */
-	public List<SeminarGroup> listGroupByTopicId(BigInteger topicId){
+	public List<SeminarGroup> listGroupByTopicId(BigInteger topicId) throws
+			IllegalArgumentException,GroupNotFoundException{
 		List<SeminarGroup> seminarGroupList=SeminarGroupMapper.listGroupByTopicId(topicId);
 		return seminarGroupList;
 	}
@@ -213,8 +227,11 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	// * @exception InfoIllegalException GroupId、TopicId格式错误时抛出
 	 * @exception GroupNotFoundException 该小组不存在时抛出
 	 */
-	public BigInteger insertTopicByGroupId(BigInteger groupId, BigInteger topicId){
-		BigInteger seminarGroupTopicId=SeminarGroupMapper.insertTopicByGroupId(groupId,topicId);
+	public BigInteger insertTopicByGroupId(BigInteger groupId, BigInteger topicId) throws
+			IllegalArgumentException,GroupNotFoundException{
+		Topic  topic=new Topic();
+		SeminarGroupMapper.insertTopicByGroupId(groupId,topicId,topic);
+		BigInteger seminarGroupTopicId=topic.getId();
 		return seminarGroupTopicId;
 	}
 
@@ -230,7 +247,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @see SeminarGroupServiceImpl #getSeminarGroupLeaderByGroupId(BigInteger groupId)
 	 */
 
-	public BigInteger getSeminarGroupLeaderById(BigInteger userId, BigInteger seminarId) {
+	public BigInteger getSeminarGroupLeaderById(BigInteger userId,BigInteger seminarId) throws
+			IllegalArgumentException{
     	BigInteger leaderId=SeminarGroupMapper.getSeminarGroupLeaderById(userId,seminarId);
     	return leaderId;
     }
@@ -246,8 +264,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @return Boolean 自动分组成功返回true，否则返回false
 	 */
 
-	public void automaticallyGrouping(BigInteger seminarId,BigInteger classId)
-    {
+	public void automaticallyGrouping(BigInteger seminarId,BigInteger classId) throws
+			IllegalArgumentException,SeminarNotFoundException,ClassesNotFoundException {
 
     }
 
@@ -262,7 +280,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	 * @exception UserNotFoundException 不存在该学生
 	 * @exception InvalidOperationException 已经有组长了
 	 */
-	public void assignLeaderById(BigInteger groupId,BigInteger userId){
+	public void assignLeaderById(BigInteger groupId,BigInteger userId) throws
+			IllegalArgumentException,GroupNotFoundException,
+			UserNotFoundException,InvalidOperationException{
 		SeminarGroupMapper.assignLeaderById(groupId,userId);
 	}
 
@@ -276,7 +296,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 	// * @exception InfoIllegalException (信息不合法，id格式错误)
 	 * @exception GroupNotFoundException (未找到小组)
 	 */
-	public void resignLeaderById(BigInteger groupId,BigInteger userId){
+	public void resignLeaderById(BigInteger groupId,BigInteger userId) throws
+			IllegalArgumentException,GroupNotFoundException{
 		SeminarGroupMapper.resignLeaderById(groupId,userId);
 	}
 
