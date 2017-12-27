@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 public interface FixGroupMapper {
     void deleteFixGroupMemberByFixGroupId(BigInteger fixGroupId)throws
@@ -34,8 +35,7 @@ public interface FixGroupMapper {
     void updateFixGroupByGroupId(@Param("groupId") BigInteger groupId, @Param("fixGroup") FixGroup fixGroup)throws
             IllegalArgumentException,FixGroupNotFoundException;
 
-    void insertSeminarGroupMemberBySeminarGroupId(@Param("seminarGroupId") BigInteger seminarGroupId,
-                                                  @Param("studentList") List<BigInteger> studentList)throws
+    void insertSeminarGroupMemberBySeminarGroupId(Map<String,Map<BigInteger,BigInteger>> maps)throws
             IllegalArgumentException,FixGroupNotFoundException;
 
     List<FixGroupMember> listFixGroupByGroupId(BigInteger groupId)throws
@@ -53,9 +53,9 @@ public interface FixGroupMapper {
     FixGroup getFixedGroupById(@Param("userId") BigInteger userId, @Param("classId") BigInteger classId)throws
             IllegalArgumentException,ClassesNotFoundException,UserNotFoundException;
 
-    List<FixGroup> listSeminarIdAndLeaderIdByFixedGroupId(@Param("fixedGroupId") BigInteger fixedGroupId) throws
+    List<FixGroup> listClassIdAndLeaderIdByFixedGroupId(BigInteger fixedGroupId) throws
             IllegalArgumentException, FixGroupNotFoundException;
-    Long insertSeminarGroupBySeminarIdAndLeaderId(@Param("semianrId") BigInteger semianrId,@Param("classId") BigInteger classId,
+    Long insertSeminarGroupBySeminarIdAndLeaderId(@Param("seminarId") BigInteger seminarId,@Param("classId") BigInteger classId,
                                                   @Param("leaderId") BigInteger leaderId, @Param("seminarGroup") SeminarGroup seminarGroup) throws
             IllegalArgumentException, FixGroupNotFoundException;
 }

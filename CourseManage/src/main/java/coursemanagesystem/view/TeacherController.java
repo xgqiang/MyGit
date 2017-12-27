@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/teacher")
 public class TeacherController {
-	@RequestMapping(method=GET)
+	/*@RequestMapping(method=GET)
 	public String courseTest() {
 		return "/teacher";
 	}
@@ -28,5 +27,5 @@ public class TeacherController {
 	@RequestMapping(value="/build",method=GET)
 	public String courseBuild() {
 		return "/teacher/build";
-	}
+	}*/
 }

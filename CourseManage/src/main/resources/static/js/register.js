@@ -4,7 +4,7 @@ function registerForm()
     url: "/register",
     dataType: "json",
     type: "post",
-    content-type:"application/json;charset=utf-8",
+    contentType:"application/json;charset=utf-8",
     data: JSON.stringify( { "email": $('#email').val(), "password": $('#password').val() , "name": $('#name').val()
     , "school": $('#school').val(),"gender": $('#gender').val(),"type": $('#type').val(),
      "number": $('#number').val(), "email": $('#email').val()} ),

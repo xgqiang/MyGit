@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@RequestMapping("/topic")
 public class TopicController {
 
 }

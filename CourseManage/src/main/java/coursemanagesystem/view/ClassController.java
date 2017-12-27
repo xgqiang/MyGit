@@ -1,12 +1,26 @@
 package coursemanagesystem.view;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import coursemanagesystem.entity.Attendance;
+import coursemanagesystem.entity.ClassInfo;
+import coursemanagesystem.entity.FixGroup;
+import coursemanagesystem.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 
-@RestController
+
+@Controller
 @RequestMapping("/class")
 public class ClassController {
+
 	/*@Autowired
 	ClassServiceImpl classService=new ClassServiceImpl();
 	@Autowired
@@ -90,13 +104,11 @@ public class ClassController {
 	public String get_class(@RequestParam("type") String type,Model model) {
 		model.addAttribute("ClassList",classService.getAllClasses());
 		model.addAttribute("SeminarList",seminarService.getAllSeminars());
-		if(type.equals("teacher")) {			
+		if(type.equals("teacher")) {
 			return "/teacher/course/manage";
 		} else if(type.equals("student")) {
 			return "/student/course/choose";
 		}
 		return "/#";
-	}
-	*/
-	
+	}*/
 }

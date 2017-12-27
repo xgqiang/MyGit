@@ -4,7 +4,7 @@ function updateMessageForm()
     url: "/me",
     dataType: "json",
     type: "post",
-    content-type:"application/json;charset=utf-8",
+    contentType:"application/json;charset=utf-8",
     data: JSON.stringify( {"id": $('#id').val(),"name": $('#name').val(), "number": $('#number').val() , "email": $('#email').val()
     , "school": $('#school').val(), "gender": $('#gender').val(), "phone": $('#phone').val()} ),
     processData: false,

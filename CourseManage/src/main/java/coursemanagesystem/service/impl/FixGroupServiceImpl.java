@@ -1,7 +1,9 @@
 package coursemanagesystem.service.impl;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import coursemanagesystem.entity.FixGroup;
 import coursemanagesystem.entity.FixGroupMember;
@@ -200,13 +202,20 @@ public class FixGroupServiceImpl implements FixGroupService {
 	 */
 	public void fixedGroupToSeminarGroup(BigInteger semianrId, BigInteger fixedGroupId) throws
 			IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException{
-		List<FixGroup> fixGroupList=fixGroupMapper.listSeminarIdAndLeaderIdByFixedGroupId(fixedGroupId);
-		BigInteger classId=fixGroupList.get(1).getClassInfo().getId();
-		BigInteger leaderId=fixGroupList.get(1).getLeader().getId();
+		List<FixGroup> fixGroupList=fixGroupMapper.listClassIdAndLeaderIdByFixedGroupId(fixedGroupId);
+		BigInteger classId=fixGroupList.get(0).getClassInfo().getId();
+		BigInteger leaderId=fixGroupList.get(0).getLeader().getId();
 		SeminarGroup seminarGroup=new SeminarGroup();
 		fixGroupMapper.insertSeminarGroupBySeminarIdAndLeaderId(semianrId,classId,leaderId,seminarGroup);
 		BigInteger seminarGroupId=seminarGroup.getId();
 		List<BigInteger> studentIdList=fixGroupMapper.listStudentIdByFixGroupId(fixedGroupId);
-		fixGroupMapper.insertSeminarGroupMemberBySeminarGroupId(seminarGroupId,studentIdList);
+		Map<BigInteger,BigInteger> mapList=new HashMap<>();
+		for(int i=0;i<studentIdList.size();i++){
+			mapList.put(studentIdList.get(i),seminarGroupId);
+			System.out.println("studentId="+studentIdList.get(i));
+		}
+		Map<String,Map<BigInteger,BigInteger>> maps = new HashMap<>();
+		maps.put("maps",mapList);
+		fixGroupMapper.insertSeminarGroupMemberBySeminarGroupId(maps);
 	}
 }

@@ -251,7 +251,16 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     	return leaderId;
     }
 
-
+	/**
+	 * 删除小组成员.
+	 * <p>在指定小组成员表下删除一个小组成员信息<br>
+	 * @param seminarGroupId 小组的id
+	 * @param  userId 成员id
+	 */
+	public void deleteSeminarGroupMemberById(BigInteger seminarGroupId,
+									  BigInteger userId){
+		SeminarGroupMapper.deleteSeminarGroupMemberById(seminarGroupId,userId);
+	}
 
     /**
 	 * 自动分组.

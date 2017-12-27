@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/school")
 public class SchoolController {
 	@RequestMapping(value="/school",method=GET)
 	public String get_school() {

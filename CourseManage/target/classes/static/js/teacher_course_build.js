@@ -4,7 +4,7 @@ function createCourseForm()
     url: "/course",
     dataType: "json",
     type: "post",
-    content-type:"application/json;charset=utf-8",
+    contentType:"application/json;charset=utf-8",
     data: JSON.stringify( { "name": $('#name').val(), "startTime": $('#startTime').val() , "endTime": $('#endTime').val()
     , "description": $('#description').val(), "numClass": $('#numClass').val(), "numStudent": $('#numStudent').val(),
     "presentation": $('#presentation').val(),"report": $('#report').val(), "a": $('#a').val(), "b": $('#b').val()

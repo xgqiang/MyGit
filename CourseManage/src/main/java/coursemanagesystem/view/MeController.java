@@ -1,27 +1,30 @@
 package coursemanagesystem.view;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
+import coursemanagesystem.entity.School;
+import coursemanagesystem.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
+import java.util.List;
 
-@RestController
-@RequestMapping("/me")
+@Controller
+@RequestMapping("/")
 public class MeController {
-	/*@Autowired
+
+    /*@Autowired
 	LoginService loginService=new LoginService();
 	@Autowired
 	UserServiceImpl userService=new UserServiceImpl();
 	@RequestMapping(method=GET)
 	public String get_me_message(@RequestParam("type") String type,Model model) {
 		model.addAttribute("User",loginService.getNowUser());
-		if(type.equals("teacher")) {			
+		if(type.equals("teacher")) {
 			return "/teacher/message";
 		} else {
 			return "/student/message";

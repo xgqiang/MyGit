@@ -54,29 +54,32 @@
     <insert id="insertSeminarGroupMemberBySeminarGroupId">
         insert into seminar_group_member (seminar_group_id,student_id)
         values
-        <foreach collection="list" item="item" index="index" separator="," >
-            (#{seminarGroupId},#{item})
+        <foreach collection="maps" item="value" index="key" separator="," >
+            (#{value},#{key})
         </foreach>
-
     </insert>
 
     <update id="updateFixGroupByGroupId">
         update fix_group
-        set id=#{fixGroup.id}
+        set class_id=#{fixGroup.classInfo.id},leader_id=#{fixGroup.leader.id}
         where id=#{groupId};
     </update>
 
     <delete id="deleteFixGroupByClassId">
-        delete from fix_group where class_id=#{classId};
+        delete from fix_group
+        where class_id=#{classId};
     </delete>
     <delete id="deleteFixGroupByGroupId">
-        delete from fix_group where id=#{groupId};
+        delete from fix_group
+        where id=#{groupId};
     </delete>
     <delete id="deleteFixGroupMemberByFixGroupId">
-        delete from fix_group_member where id=#{fixGroupId};
+        delete from fix_group_member
+        where id=#{fixGroupId};
     </delete>
     <delete id="deleteFixGroupUserById">
-        delete from seminar_group_member where seminar_group_id=#{fixGroupId} and student_id=#{userId};
+        delete from fix_group_member
+        where fix_group_id=#{fixGroupId} and student_id=#{userId};
     </delete>
     <select id="getFixedGroupById" resultMap="FixGroupResultMap">
         select id,class_id,leader_id
@@ -105,12 +108,12 @@
         from fix_group_member
         where fix_group_id=#{groupId})
     </select>
-    <select id="listSeminarIdAndLeaderIdByFixedGroupId" resultMap="FixGroupResultMap">
-        select class_id,leader_id
+    <select id="listClassIdAndLeaderIdByFixedGroupId" resultMap="FixGroupResultMap">
+        select id,class_id,leader_id
         from fix_group
         where id=#{fixedGroupId};
     </select>
-    <select id="listStudentIdByFixGroupId" resultMap="java.math.BigInteger">
+    <select id="listStudentIdByFixGroupId" resultType="java.math.BigInteger">
         select student_id
         from fix_group_member
         where fix_group_id=#{fixedGroupId};

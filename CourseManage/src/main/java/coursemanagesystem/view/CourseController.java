@@ -1,28 +1,24 @@
 package coursemanagesystem.view;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import java.util.Random;
+import coursemanagesystem.entity.Course;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
+@Controller
 @RequestMapping("/course")
 public class CourseController {
-	
-	/*@Autowired
+
+    /*@Autowired
 	CourseService courseService = new CourseService();
 	Random rand = new Random(34);
-	
+
 	@RequestMapping(value="/teacher/course/manage",method=GET)
 	public String get_teacher_course_message() {
 		return "/teacher/course/manage";
@@ -65,8 +61,8 @@ public class CourseController {
 		model.addAttribute("CourseList", courseService.getAllSelectCourses());
 		return "/student/course";
 	}
-	
-	
+
+
 	@RequestMapping(value="/create",method=GET)
 	public String get_create_course(Model model) {
 		return "/teacher/build";
@@ -84,7 +80,7 @@ public class CourseController {
 		model.addAttribute("CourseList", courseService.getAllSelectCourses());
 		return "/student/course";
 	}
-	
+
 	@RequestMapping(value="/create",method=POST)
 	public String post_create_course(@RequestParam("numClass") int numClass,@RequestParam("numStudent") int numStudent,@RequestParam("name") String name,
 			@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,@RequestParam("description") String description,
@@ -104,8 +100,8 @@ public class CourseController {
 		courseService.saveCourse(course);
 		return "redirect:/course?type=teacher";
 	}
-	
-	
+
+
 	@RequestMapping(method=GET)
 	public String get_course(@RequestParam("type") String type,Model model) {
 		if(type.equals("student")) {
@@ -132,7 +128,7 @@ public class CourseController {
 		model.addAttribute("CourseList", courseService.getAllCourses());
 		return "/teacher/course";
 	}
-	
+
 	@RequestMapping(value="/{courseId}",method=DELETE)
 	public String teacher_delete_course(@PathVariable String courseId,Model model) {
 		System.out.println("delete_id="+courseId);
@@ -140,7 +136,7 @@ public class CourseController {
 		model.addAttribute("CourseList", courseService.getAllCourses());
 		return "/teacher/course";
 	}
-	
+
 	@RequestMapping(value="/update/{courseId}",method=PUT)
 	public String change_course(@PathVariable String courseId,@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime,
 			@RequestParam("description") String description,@RequestParam("name") String name,
@@ -157,4 +153,5 @@ public class CourseController {
 		//courseService.saveCourse(course);
 		return "/course?type=teacher";
 	}*/
+
 }

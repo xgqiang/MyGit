@@ -50,7 +50,7 @@ public class FixGroupServiceTest {
     public void testFixedGroupToSeminarGroup(){
         try{
             BigInteger semianrId=new BigInteger("1");
-            BigInteger fixedGroupId=new BigInteger("9");
+            BigInteger fixedGroupId=new BigInteger("1");
             fixGroupService.fixedGroupToSeminarGroup(semianrId,fixedGroupId);
         }
         catch (Exception e){

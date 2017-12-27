@@ -26,8 +26,13 @@ public class SeminarGroupServiceTest {
     private SeminarGroupServiceImpl seminarGroupService;
     @Test
     public void testDeleteSeminarGroupMemberBySeminarGroupId(){
-        BigInteger seminarGroupId=new BigInteger("3");
-        seminarGroupService.deleteSeminarGroupByGroupId(seminarGroupId);
+        try {
+            BigInteger seminarGroupId = new BigInteger("3");
+            seminarGroupService.deleteSeminarGroupMemberBySeminarGroupId(seminarGroupId);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
     @Test
     public void testGetSeminarGroupLeaderByGroupId(){

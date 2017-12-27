@@ -1,28 +1,35 @@
 package coursemanagesystem.view;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-
+import coursemanagesystem.entity.Course;
+import coursemanagesystem.entity.Seminar;
+import coursemanagesystem.exception.SeminarNotFoundException;
+import coursemanagesystem.service.impl.SeminarGroupServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@RequestMapping("/seminar")
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
+@RestController
 public class SeminarController {
-	@Autowired
+	//@Autowired
 	//SeminarServiceImpl seminarService = new SeminarServiceImpl();
-	
+
 	/*@RequestMapping(value="/manage",method=GET)
 	public String get_seminar_manage(@RequestParam("seminarId") String seminarId,@RequestParam("type") String type,
 			Model model) {
 		model.addAttribute("Seminar", seminarService.findOne(Integer.valueOf(seminarId)));
 		return "/teacher/course/seminar/manage";
 	}
-	
+
 	@RequestMapping(value="/{seminarId}",method=GET)
 	public String get_seminar_message(@PathVariable String seminarId,@RequestParam("type") String type,
 			Model model) {
@@ -40,7 +47,7 @@ public class SeminarController {
 		model.addAttribute("Seminar", seminarService.findOne(Integer.valueOf(seminarId)));
 		return "/teacher/course/seminar/change";
 	}*/
-	@RequestMapping(value="{seminarId}",method=PUT)
+	/*@RequestMapping(value="{seminarId}",method=PUT)
 	public String put_seminar_message() {
 		return "/teacher/course/seminar/manage";
 	}
@@ -81,5 +88,6 @@ public class SeminarController {
 	@RequestMapping(value="{seminarId}/group",method=GET)
 	public String get_seminar_group() {
 		return "/teacher/course/seminar/manage";
-	}
+	}*/
+
 }

@@ -37,7 +37,7 @@
         insert into seminar_group_member(seminar_group_id,student_id)
         values(#{groupId},#{userId})
     </insert>
-    <insert id="insertSeminarGroupBySeminarId" parameterType="SeminarGroup">
+    <insert id="insertSeminarGroupBySeminarId">
         <selectKey resultType="java.math.BigInteger" order="AFTER" keyProperty="seminarGroup.id">
             SELECT last_insert_id()
         </selectKey>
@@ -89,6 +89,10 @@
         delete from seminar_group
         where seminar_id =#{seminarId}
     </delete>
+    <delete id="deleteSeminarGroupMemberById">
+        delete from seminar_group_member
+        where seminar_group_id=#{seminarGroupId} and student_id=#{userId}
+    </delete>
     <delete id="deleteSeminarGroupByGroupId">
         delete from seminar_group
         where id=#{seminarGroupId}
@@ -125,7 +129,7 @@
         from seminar_group
         where seminar_id =#{seminarId}
     </select>
-    <select id="getSeminarGroupByGroupId" resultType="SeminarGroupResultMap">
+    <select id="getSeminarGroupByGroupId" resultMap="SeminarGroupResultMap">
         select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
         where id=#{groupId}
@@ -142,7 +146,7 @@
     <select id="automaticallyGrouping">
         select leader_id from seminar_group WHERE id=#{seminarId}
     </select>
-    <select id="getSeminarGroupById" resultType="SeminarGroupResultMap">
+    <select id="getSeminarGroupById" resultMap="SeminarGroupResultMap">
         select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
         where seminar_id=#{seminarId}
@@ -151,7 +155,7 @@
         from seminar_group_member
         where student_id=#{userId})
     </select>
-    <select id="listGroupByTopicId" resultType="SeminarGroupResultMap">
+    <select id="listGroupByTopicId" resultMap="SeminarGroupResultMap">
         select id,seminar_id,report_grade, presentation_grade, final_grade, report, class_id, leader_id
         from seminar_group
         where id in

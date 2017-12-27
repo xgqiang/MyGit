@@ -4,7 +4,7 @@ function createClassForm()
     url: "/class/seminar/create",
     dataType: "json",
     type: "post",
-    content-type:"application/json;charset=utf-8",
+    contentType:"application/json;charset=utf-8",
     data: JSON.stringify( { "name": $('#name').val(), "description": $('#description').val(), 
     "groupingMethod": $('#groupingMethod').val(), "presentation": $('#presentation').val(),
     "startTime": $('#startTime').val(), "endTime": $('#endTime').val(), "report": $('#report').val(),
