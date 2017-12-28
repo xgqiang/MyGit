@@ -7,6 +7,7 @@ import coursemanagesystem.entity.SeminarGroup;
 import coursemanagesystem.entity.SeminarGroupMember;
 import coursemanagesystem.entity.User;
 import coursemanagesystem.exception.*;
+import org.springframework.stereotype.Component;
 
 public interface SeminarGroupService {
 

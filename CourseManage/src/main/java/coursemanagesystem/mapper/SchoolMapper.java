@@ -6,8 +6,12 @@ import coursemanagesystem.entity.School;
 
 public interface SchoolMapper {
 	List<School> listSchoolByCity(String city);
-	void insertSchool(School school);
+
+	Integer insertSchool(School school);
+
 	List<String> listProvince();
+
 	List<String> listCity(String province);
+
 	School getSchoolBySchoolId(BigInteger SchoolId);
 }

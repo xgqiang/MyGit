@@ -14,24 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigInteger;
 
-@Controller
+/*@Controller
 @RequestMapping("/")
 public class LoginController {
 	@RequestMapping(value="/home",method=GET)
 	public String login() {
 		return "index";
 	}
-	/*@RequestMapping(value="/wechat",method=GET)
+	@RequestMapping(value="/wechat",method=GET)
 	public String wechatlogin() {
 		return "wechat";
 	}
-	/*@RequestMapping(value="/register",method=GET)
+	@RequestMapping(value="/register",method=GET)
 	public String getregister() {
 		return "register";
 	}
-	@RequestMapping(value="/signin",method=GET)
-	public String getsigin() {
-		return "teacher";
-	}*/
-
-}
+}*/

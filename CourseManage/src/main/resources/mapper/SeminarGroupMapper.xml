@@ -29,6 +29,107 @@
         <result column="class_id" property="classInfo.id" />
         <result column="leader_id" property="leader.id" />
     </resultMap>
+    <resultMap type="School" id="School">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city" />
+    </resultMap>
+    <select id="getSchoolById" resultMap="School">
+        SELECT *
+        FROM school
+        WHERE id=#{id}
+    </select>
+    <resultMap type="User" id="User">
+        <id property="id" column="id"/>
+        <result property="phone" column="phone"/>
+        <result property="wechatId" column="wechat_id"/>
+        <result property="openid" column="openid"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="type" column="type"/>
+        <result property="number" column="number"/>
+        <result property="education" column="education"/>
+        <result property="title" column="title"/>
+        <result property="email" column="email"/>
+        <association property="school" column="school_id" select="getSchoolById"/>
+    </resultMap>
+    <resultMap type="Course" id="Course">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="description" column="description"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <association property="teacher" column="teacher_id"  select="getUserById"/>
+    </resultMap>
+    <resultMap type="Seminar" id="Seminar">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="fixed" column="is_fixed"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <association property="course" column="course_id" select="getCourseById"/>
+    </resultMap>
+    <select id="getCourseById" resultMap="Course">
+        SELECT *
+        FROM course
+        WHERE id=#{id}
+    </select>
+    <resultMap type="ClassInfo" id="ClassInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="site" column="site"/>
+        <result property="classTime" column="class_time"/>
+        <result property="description" column="description"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <association property="course" column="course_id" select="getCourseById"/>
+    </resultMap>
+    <select id="getClassInfoById" resultMap="ClassInfo">
+        SELECT *
+        FROM class_info
+        WHERE id=#{id}
+    </select>
+    <resultMap type="SeminarGroup" id="SeminarGroup">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="report" column="report"/>
+        <result property="reportGrade" column="report_grade"/>
+        <result property="presentationGrade" column="presentation_grade"/>
+        <result property="finalGrade" column="final_grade"/>
+        <association property="seminar" column="seminar_id" select="getSeminarById" />
+        <association property="classInfo" column="classInfo_id" select="getClassInfoById"/>
+        <association property="leader" column="leader_id" select="getUserById"/>
+    </resultMap>
+    <resultMap type="SeminarGroupMember" id="SeminarGroupMember">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <association property="seminarGroup" column="seminar_group_id" select="getSeminarGroupById"/>
+        <association property="student" column="student_id" select="getUserById"/>
+    </resultMap>
+    <resultMap type="Topic" id="Topic">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name"/>
+        <result property="desciption" column="desciption"/>
+        <result property="groupNumberLimit" column="group_number_limit"/>
+        <result property="groupStudentLimit" column="group_student_limit"/>
+        <association property="seminar" column="seminar_id" select="getSeminarById"/>
+    </resultMap>
+    <resultMap type="SeminarGroupTopic" id="SeminarGroupTopic">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="presentationGrade" column="presentation_grade"/>
+        <association property="topic" column="topic_id" select="getTopicById"/>
+        <association property="seminarGroup" column="seminar_group_id" select="getSeminarGroupById"/>
+    </resultMap>
 
     <insert id="insertSeminarGroupMemberById">
         <selectKey resultType="java.math.BigInteger" keyProperty="seminarGroupMember.id" order="AFTER">
@@ -172,4 +273,5 @@
             #{item.id}
         </foreach>
     </select>
+
 </mapper>
